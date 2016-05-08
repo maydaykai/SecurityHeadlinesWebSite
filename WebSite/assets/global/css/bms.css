@@ -1,0 +1,31 @@
+#pagelet-nfeedlist .left{float: left;}
+#pagelet-nfeedlist .right{float: right;}
+#pagelet-nfeedlist .item-inner{position: relative;padding: 16px 0;border-bottom: 1px solid #f5f6f7;}
+#pagelet-nfeedlist .title-box{display:block;font-size:18px;color:#000042;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.15;margin-bottom:4px;font-weight:700}
+
+#pagelet-nfeedlist .title-box a{text-decoration:none;color:#222}
+#pagelet-nfeedlist .title-box a:hover{color: #5C9BD1 }
+#pagelet-nfeedlist .link{text-decoration:none;color:#555}
+#pagelet-nfeedlist .link:hover{color:#5C9BD1 }
+#pagelet-nfeedlist .no-abstract .title{white-space:normal}
+#pagelet-nfeedlist .abstract{font-size:14px;color:#444;line-height:20px;margin-bottom:8px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis;max-height:3em}
+#pagelet-nfeedlist .lbox{position:relative;width:126px;height:82px;border:1px solid #e8e8e8;background:#e8e8e8}
+#pagelet-nfeedlist .lbox .feedimg{width:100%;height:100%;opacity:0;-webkit-transition-duration:.4s;transition-duration:.4s;-webkit-transition-property:opacity;transition-property:opacity}
+#pagelet-nfeedlist .lbox .ftype{position:absolute;right:4px;bottom:4px;height:22px;min-width:6px;line-height:22px;font-size:12px;color:#fff;background:#000;background:rgba(0,0,0,.5);padding:0 8px;border-radius:11px}
+#pagelet-nfeedlist .lbox .ftype.video span{padding-left:8px}
+#pagelet-nfeedlist .lbox .ftype.video:before{content:'';position:absolute;width:6px;height:8px;top:50%;margin-top:-4px;background-repeat: no-repeat;}
+#pagelet-nfeedlist .rbox{position:relative;height:84px;margin-left:144px;font-size:0}
+#pagelet-nfeedlist .rbox:before{content:'';width:0;font-size:0;height:100%;visibility:hidden;display:inline-block;vertical-align:middle}
+#pagelet-nfeedlist .rbox .rbox-inner{display:inline-block;width:100%;vertical-align:middle}
+#pagelet-nfeedlist .footer{font-size:12px;color:#999;height:16px;line-height:16px}
+#pagelet-nfeedlist .rfooter{margin-top:1px}
+#pagelet-nfeedlist .lbtn{display:inline-block}
+#pagelet-nfeedlist .lbtn.source{text-decoration:none;color:#999}
+#pagelet-nfeedlist .rbtn.share .share-list .icon {width: 28px;height: 28px;margin: 0 3px;vertical-align: middle;}
+.icon.icon-tsina {background-position: 0px 0px;}
+.icon.icon-tsina, .icon.icon-tqq, .icon.icon-qzone, .icon.icon-close, .icon:hover.icon-tsina, .icon:hover.icon-tqq, .icon:hover.icon-qzone, .selected .icon.icon-close, .btn:hover .icon.icon-close {background-image: url(/img/nbase_z_80c8d9f.png);}
+.blog-single-desc{text-align:justify;}
+.mt15{margin-top: 15px;}
+.mb20{margin-bottom: 20px;}
+.blog-single-desc img {max-width:100%;height:auto;}
+

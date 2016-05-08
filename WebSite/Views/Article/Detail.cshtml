@@ -1,0 +1,96 @@
+﻿@model Model.ArticleModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN PAGE BREADCRUMBS -->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="">首页</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span>文章详情</span>
+    </li>
+</ul>
+<!-- END PAGE BREADCRUMBS -->
+<!-- BEGIN PAGE CONTENT INNER -->
+<div class="page-content-inner">
+    <div class="blog-page blog-content-2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog-single-content bordered blog-container">
+                    <div class="blog-single-head">
+                        <h1 class="blog-single-head-title">@Html.DisplayFor(model => model.title)</h1>
+                        <div class="blog-single-head-date">
+                            <div class="left lfooter mb20">
+                                <span class="lbtn comment"></span>
+                                <span class="lbtn comment"></span>
+                                <span class="lbtn time" data-publishtime="1458871218">@{string pubTime = Model.pubTime.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content" class="blog-single-desc">
+                        @Html.Raw(Model.content)
+                    </div>
+                    @*<div class="blog-single-foot">
+                            <ul class="blog-post-tags">
+                                <li class="uppercase">
+                                    <a href="javascript:;"><i class="icon-star"></i>收藏</a>
+                                </li>
+                                <li class="uppercase">
+                                    <a href="javascript:;"><i class="icon-share"></i>分享</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="blog-single-desc">
+                            <img src="../assets/global/img/90e45236-d62a-4c14-93c2-eae72fdadf20.jpg">
+                        </div>
+                        <div class="blog-comments">
+                            <h3 class="sbold blog-comments-title">评论 (30)</h3>
+                            <form action="#">
+                                <div class="form-group">
+                                    <textarea rows="8" name="message" placeholder="填写评论..." class="form-control c-square"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn blue uppercase btn-md sbold btn-block">发布评论</button>
+                                </div>
+                            </form>
+                            <div class="c-comment-list">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object" alt="" src="../assets/layouts/layout3/img/avatar.png">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a href="#">沧桑</a>
+                                            <span class="c-date">2016-03-25</span>
+                                        </h4> 这个文章不错！
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object" alt="" src="../assets/layouts/layout3/img/avatar.png">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a href="#">沧桑</a>
+                                            <span class="c-date">2016-03-25</span>
+                                        </h4> 非常好！
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT INNER -->

@@ -1,0 +1,252 @@
+﻿@model System.Collections.Generic.List<Model.ArticleModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN PAGE CONTENT INNER -->
+<div class="page-content-inner">
+    <div class="row mt15">
+        <div class="col-md-9 col-sm-9">
+            <div class="portlet light" id="wrapper">
+                <div class="pull-action loading" id="pull-down">
+                    <span class="am-icon-arrow-down pull-label"
+                          id="pull-down-label">下拉刷新</span>
+                    <span class="am-icon-spinner am-icon-spin"></span>
+                </div>
+                <div class="portlet-body" id="pagelet-nfeedlist">
+
+                </div>
+                <div class="pull-action" id="pull-up">
+                    <span class="am-icon-arrow-down pull-label"
+                          id="pull-up-label">上拉加载更多</span>
+                    <span class="am-icon-spinner am-icon-spin"></span>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-3 col-sm-3">
+            <div class="portlet light ">
+                <div class="portlet-body">
+                    <img src="../assets/layouts/layout3/img/1461908288.png">
+                </div>
+            </div>
+            <div class="portlet light ">
+                <div class="portlet-body">
+                    <h4>热门评论</h4>
+                    <ul style="padding-left:20px;">
+                        <li style="margin-top:10px;">张三：放大镜看撒减肥的时刻！</li>
+                        <li style="margin-top:10px;">张三：放大镜看撒减肥的时范德萨发大水刻！</li>
+                        <li style="margin-top:10px;">张三：放大镜看撒减肥的时刻！</li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+<!-- END PAGE CONTENT INNER -->
+<script src="~/assets/amazeui/js/jquery.min.js"></script>
+<script src="~/assets/amazeui/js/handlebars.min.js"></script>
+@{
+    var id = @ViewData["Id"];
+}
+<script type="text/x-handlebars-template" id="tpi-list-item">
+    {{#each this}}
+    <div class="item-inner">
+        <div class="lbox left">
+            <a ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
+                <img class="feedimg" src="{{imgHelper imgs}}" onload="this.style.opacity = 1;" style="opacity: 1;">
+            </a>
+        </div>
+        <div class="rbox">
+            <div class="rbox-inner">
+                <div class="title-box">
+                    <a ga_event="click_feed_newstitle" class="link title" href="@Url.Action("Detail", "Article")/{{id}}" data-node="title">
+                        {{title}}
+                    </a>
+                </div>
+                <div class="abstract">
+                    <a ga_event="click_feed_newsabstract" class="link" href="@Url.Action("Detail", "Article")/{{id}}">{{content}}</a>
+                </div>
+                <div class="footer">
+                    <div class="left lfooter">
+                        @*<span class="lbtn comment">手机央广网&nbsp;⋅</span>
+    <span class="lbtn comment">363评论&nbsp;⋅</span>
+    <span class="lbtn time" data-publishtime="1458871218">{{pubTime}}</span>*@
+                    </div>
+                    <div class="right rfooter">
+                        <a class="feed_tools share rbtn" href="javascript:;" data-node="feed_share">
+                            <div class="snsbox">
+                                <div class="snsbox-inner">
+                                    <span>分享到：</span>
+                                    <div class="snszone" data-url="http://aftop.cn" data-text="新闻标题" data-desc="来自头条 http://aftop.cn" data-pic="" data-node="share">
+                                        <i class="sns-btn sns-weixin" ga_event="click_share_interactive" ga_label="weixin" data-type="" title="分享到微信">
+                                        </i>
+                                        <i class="sns-btn sns-qzone" ga_event="click_share_interactive" ga_label="qzone" data-type="qzone" title="分享到QQ空间"></i>
+                                        <i class="sns-btn sns-weibo" ga_event="click_share_interactive" ga_label="tsina" data-type="tsina" title="分享到新浪微博"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <span data-node="likeGroup" class="">
+                            <a class="rbtn bury" href="javascript:;" title="不喜欢" data-node="close">
+                            </a>
+                            <a class="rbtn digg" href="javascript:;" title="喜欢" data-node="digg">
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script src="~/assets/amazeui/js/amazeui.min.js"></script>
+<script>
+    (function($) {
+        var EventsList = function(element, options) {
+            var $main = $('#wrapper');
+            var $list = $main.find('#pagelet-nfeedlist');
+            var $pullDown = $main.find('#pull-down');
+            var $pullDownLabel = $main.find('#pull-down-label');
+            var $pullUp = $main.find('#pull-up');
+            var topOffset = -$pullDown.outerHeight();
+
+            this.compiler = Handlebars.compile($('#tpi-list-item').html());
+            Handlebars.registerHelper("imgHelper", function (value) {
+                if (!value)
+                    return "";
+                var imgs = value.split(',');
+                return imgs[0];
+            });
+            this.prev = this.next = this.start = options.params.start;
+            this.total = null;
+
+            this.getURL = function(params) {
+                var queries = [];
+                for (var key in params) {
+                    if (key !== 'start') {
+                        queries.push(key + '=' + params[key]);
+                    }
+                }
+                queries.push('start=');
+                return options.api + '?' + queries.join('&');
+            };
+
+            this.renderList = function(start, type) {
+                var _this = this;
+                var $el = $pullDown;
+
+                if (type === 'load') {
+                    $el = $pullUp;
+                }
+                $.getJSON(this.URL + start).then(function(data) {
+                    console.log(data);
+                    _this.total = data.total;
+                    var html = _this.compiler(data.list);
+                    if (type === 'refresh') {
+                        $list.children('li').first().before(html);
+                    } else if (type === 'load') {
+                        $list.append(html);
+                    } else {
+                        $list.html(html);
+                    }
+
+                    // refresh iScroll
+                    setTimeout(function() {
+                        _this.iScroll.refresh();
+                    }, 100);
+                }, function() {
+                    console.log('Error...')
+                }).always(function() {
+                    _this.resetLoading($el);
+                    if (type !== 'load') {
+                        _this.iScroll.scrollTo(0, topOffset, 800, $.AMUI.iScroll.utils.circular);
+                    }
+                });
+            };
+
+            this.setLoading = function($el) {
+                $el.addClass('loading');
+            };
+
+            this.resetLoading = function($el) {
+                $el.removeClass('loading');
+            };
+
+            this.init = function() {
+                var myScroll = this.iScroll = new $.AMUI.iScroll('#wrapper', {
+                    click: true
+                });
+                // myScroll.scrollTo(0, topOffset);
+                var _this = this;
+                var pullFormTop = false;
+                var pullStart;
+
+                this.URL = this.getURL(options.params);
+                this.renderList(options.params.start);
+
+                myScroll.on('scrollStart', function() {
+                    if (this.y >= topOffset) {
+                        pullFormTop = true;
+                    }
+
+                    pullStart = this.y;
+                    // console.log(this);
+                });
+
+                myScroll.on('scrollEnd', function() {
+                    if (pullFormTop && this.directionY === -1) {
+                        _this.handlePullDown();
+                    }
+                    pullFormTop = false;
+
+                    // pull up to load more
+                    if (pullStart === this.y && (this.directionY === 1)) {
+                        _this.handlePullUp();
+                    }
+                });
+            };
+
+            this.handlePullDown = function() {
+                console.log('handle pull down');
+                if (this.prev > 0) {
+                    this.setLoading($pullDown);
+                    this.prev -= options.params.count;
+                    this.renderList(this.prev, 'refresh');
+                } else {
+                    console.log('别刷了，没有了');
+                }
+            };
+
+            this.handlePullUp = function() {
+                console.log('handle pull up');
+                if (this.next < this.total) {
+                    this.setLoading($pullUp);
+                    this.next += options.params.count;
+                    this.renderList(this.next, 'load');
+                } else {
+                    console.log(this.next);
+                    // this.iScroll.scrollTo(0, topOffset);
+                }
+            }
+        };
+
+        $(function() {
+            var app = new EventsList(null, {
+                api: '@Url.Action("GetList", "Article")/@id',
+                params: {
+                    start: 100,
+                    type: 'music',
+                    count: 10,
+                    page: 1
+                }
+            });
+            app.init();
+        });
+
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+    })(window.jQuery);
+</script>
