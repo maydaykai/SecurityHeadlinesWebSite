@@ -4789,7 +4789,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -4842,7 +4844,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bll\Bll.csproj">
-      <Project>{693771ce-5557-49f8-b150-ccd641e09594}</Project>
+      <Project>{7a4e0771-8e07-42b6-850a-f8ac16e4be10}</Project>
       <Name>Bll</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
