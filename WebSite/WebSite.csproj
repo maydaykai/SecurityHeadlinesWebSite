@@ -4017,6 +4017,7 @@
     <Content Include="assets\layouts\layout3\img\loading-spinner-grey.gif" />
     <Content Include="assets\layouts\layout3\img\loading.gif" />
     <Content Include="assets\layouts\layout3\img\logo-default.jpg" />
+    <Content Include="assets\layouts\layout3\img\logo-default.png" />
     <Content Include="assets\layouts\layout3\img\menu-toggler.png" />
     <Content Include="assets\layouts\layout3\scripts\demo.js" />
     <Content Include="assets\layouts\layout3\scripts\demo.min.js" />
@@ -4070,6 +4071,7 @@
     <Content Include="assets\pages\img\bg-white-lock.png" />
     <Content Include="assets\pages\img\bg-white.png" />
     <Content Include="assets\pages\img\inbox-nav-arrow-blue.png" />
+    <Content Include="assets\pages\img\logo-big.png" />
     <Content Include="assets\pages\media\bg\1.jpg" />
     <Content Include="assets\pages\media\bg\2.jpg" />
     <Content Include="assets\pages\media\bg\3.jpg" />
@@ -4827,6 +4829,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Article\List.cshtml" />
     <Content Include="Views\Article\Detail.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4847,9 +4850,9 @@
       <Project>{7a4e0771-8e07-42b6-850a-f8ac16e4be10}</Project>
       <Name>Bll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{48ef0521-b68f-4b03-85b6-3c325c6b19f3}</Project>
-      <Name>Core</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{ae1cc9de-334f-403f-a365-b3d343806244}</Project>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{0f595bc2-54ba-4a22-ba72-d5739fd1a1fa}</Project>

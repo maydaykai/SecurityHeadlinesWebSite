@@ -63,6 +63,7 @@
     <Compile Include="HtmlHelper.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="ImageWatermark.cs" />
+    <Compile Include="JsonHandler.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="Log4NetHelper.cs" />
     <Compile Include="OpenXmlHelper.cs" />

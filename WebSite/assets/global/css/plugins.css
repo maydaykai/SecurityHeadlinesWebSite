@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /******************************
  3RD PARTY PLUGIN CUSTOMIZATION 
 ******************************/
@@ -1521,7 +1521,7 @@ jQuery Notific8 Plugin
   font-size: 16px; }
 
 /***
-Password Strength(in v1.4)
+password Strength(in v1.4)
 ***/
 .password-strength .password-verdict {
   display: inline-block;

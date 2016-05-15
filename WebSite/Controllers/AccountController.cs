@@ -9,11 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebSite.Models;
+using Common;
+using Model;
+using Bll;
 
 namespace WebSite.Controllers
 {
-    [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -51,45 +53,63 @@ namespace WebSite.Controllers
                 _userManager = value;
             }
         }
-
+        
+        public ActionResult Index()
+        {
+            var returnUrl = HttpContext.Request.UrlReferrer;
+            Session["returnUrl"] = returnUrl;
+            return View();
+        }
         //
         // GET: /Account/Login
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        [HttpPost]
+        public JsonResult Login(string userName, string password)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var user = new UserBll().UserLogin(userName, password);
+            if (user.id == null)
+            {
+                return Json(JsonHandler.CreateMessage(0, "用户名或密码错误"), JsonRequestBehavior.AllowGet);
+            }
+            user = new UserBll().GetUserModel(user.userId);
+            var account = new UserModel
+            {
+                id = user.id,
+                nickname = user.nickname ?? user.username
+            };
+            Session["Account"] = account;
+
+            return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
         }
 
         //
         // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
 
-            // 这不会计入到为执行帐户锁定而统计的登录失败次数中
-            // 若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "无效的登录尝试。");
-                    return View(model);
-            }
-        }
+        //    // 这不会计入到为执行帐户锁定而统计的登录失败次数中
+        //    // 若要在多次输入错误密码的情况下触发帐户锁定，请更改为 shouldLockout: true
+        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            return RedirectToLocal(returnUrl);
+        //        case SignInStatus.LockedOut:
+        //            return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "无效的登录尝试。");
+        //            return View(model);
+        //    }
+        //}
 
         //
         // GET: /Account/VerifyCode
@@ -192,6 +212,7 @@ namespace WebSite.Controllers
         {
             return View();
         }
+
 
         //
         // POST: /Account/ForgotPassword

@@ -36,57 +36,31 @@
                         @Html.Raw(Model.content)
                     </div>
                     @*<div class="blog-single-foot">
-                            <ul class="blog-post-tags">
-                                <li class="uppercase">
-                                    <a href="javascript:;"><i class="icon-star"></i>收藏</a>
-                                </li>
-                                <li class="uppercase">
-                                    <a href="javascript:;"><i class="icon-share"></i>分享</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="blog-single-desc">
-                            <img src="../assets/global/img/90e45236-d62a-4c14-93c2-eae72fdadf20.jpg">
-                        </div>
-                        <div class="blog-comments">
-                            <h3 class="sbold blog-comments-title">评论 (30)</h3>
-                            <form action="#">
-                                <div class="form-group">
-                                    <textarea rows="8" name="message" placeholder="填写评论..." class="form-control c-square"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn blue uppercase btn-md sbold btn-block">发布评论</button>
-                                </div>
-                            </form>
-                            <div class="c-comment-list">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" alt="" src="../assets/layouts/layout3/img/avatar.png">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">
-                                            <a href="#">沧桑</a>
-                                            <span class="c-date">2016-03-25</span>
-                                        </h4> 这个文章不错！
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" alt="" src="../assets/layouts/layout3/img/avatar.png">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">
-                                            <a href="#">沧桑</a>
-                                            <span class="c-date">2016-03-25</span>
-                                        </h4> 非常好！
-                                    </div>
-                                </div>
+                        <ul class="blog-post-tags">
+                            <li class="uppercase">
+                                <a href="javascript:;"><i class="icon-star"></i>收藏</a>
+                            </li>
+                            <li class="uppercase">
+                                <a href="javascript:;"><i class="icon-share"></i>分享</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blog-single-desc">
+                        <img src="../assets/global/img/90e45236-d62a-4c14-93c2-eae72fdadf20.jpg">
+                    </div>*@
+                    <div class="blog-comments" id="wrapper">
+                        <h3 class="sbold blog-comments-title">评论 (<span id="total">0</span>)</h3>
+                        <div>
+                            <div class="form-group">
+                                <textarea rows="8" name="message" placeholder="填写评论..." class="form-control c-square"></textarea>
                             </div>
-                        </div>*@
+                            <div class="form-group">
+                                <button type="button" id="btn_save" class="btn blue uppercase btn-md sbold btn-block">发布评论</button>
+                            </div>
+                        </div>
+                        <div class="c-comment-list" id="pagelet-nfeedlist">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -94,3 +68,66 @@
     </div>
 </div>
 <!-- END PAGE CONTENT INNER -->
+<script src="~/assets/amazeui/js/handlebars.min.js"></script>
+<script type="text/x-handlebars-template" id="tpi-list-item">
+    {{#each this}}
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" alt="" src="../assets/layouts/layout3/img/avatar.png">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a href="#">{{username}}</a>
+                <span class="c-date">{{createdAt}}</span>
+            </h4> {{content}}
+        </div>
+    </div>
+    {{/each}}
+</script>
+@{
+    var id = @ViewData["Id"];
+    var userId = Session[""];
+}
+<script>
+    (function ($) {
+        var eventsList = function (element, options) {
+            var $main = $('#wrapper');
+            var $list = $main.find('#pagelet-nfeedlist');
+            var $total = $main.find('#total');
+
+            this.compiler = Handlebars.compile($('#tpi-list-item').html());
+            this.total = null;
+            this.getURL = function () {
+                return options.api;
+            };
+            this.renderList = function () {
+                var _this = this;
+                $.getJSON(this.URL).then(function (data) {
+                    _this.total = data.total;
+                    var html = _this.compiler(data.list);
+                    $list.html(html);
+                    $total.text(_this.total);
+                }, function () {
+                    console.log('Error...');
+                }).always(function () {
+                });
+            };
+            $main.on("#btn_save", function() {
+                
+            });
+            this.init = function () {
+                this.URL = this.getURL();
+                this.renderList();
+            };
+        };
+
+        $(function () {
+            var app = new eventsList(null, {
+                api: '@Url.Action("GetCommentList", "Article")/@id'
+            });
+            app.init();
+        });
+    })(window.jQuery);
+</script>

@@ -4,7 +4,35 @@
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    #wrapper {
+      top: 49px;
+      bottom: 0;
+      overflow: hidden;
+      margin: 0;
+      width: 100%;
+      padding: 0 8px;
+      background-color: #f8f8f8;
+    }
+     .pull-action {
+         text-align: center;
+         height: 45px;
+         line-height: 45px;
+         color: #999;
+     }
 
+    .pull-action .am-icon-spin {
+        display: none;
+    }
+
+    .pull-action.loading .am-icon-spin {
+        display: block;
+    }
+
+    .pull-action.loading .pull-label {
+        display: none;
+    }
+</style>
 <!-- BEGIN PAGE CONTENT INNER -->
 <div class="page-content-inner">
     <div class="row mt15">
@@ -45,7 +73,7 @@
     </div>
 </div>
 <!-- END PAGE CONTENT INNER -->
-<script src="~/assets/amazeui/js/jquery.min.js"></script>
+@*<script src="~/assets/amazeui/js/jquery.min.js"></script>*@
 <script src="~/assets/amazeui/js/handlebars.min.js"></script>
 @{
     var id = @ViewData["Id"];
@@ -129,7 +157,7 @@
                         queries.push(key + '=' + params[key]);
                     }
                 }
-                queries.push('start=');
+                queries.push('page=');
                 return options.api + '?' + queries.join('&');
             };
 
@@ -236,10 +264,9 @@
             var app = new EventsList(null, {
                 api: '@Url.Action("GetList", "Article")/@id',
                 params: {
-                    start: 100,
+                    start: 1,
                     type: 'music',
-                    count: 10,
-                    page: 1
+                    count: 10
                 }
             });
             app.init();

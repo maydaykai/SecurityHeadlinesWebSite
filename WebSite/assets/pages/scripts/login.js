@@ -23,7 +23,7 @@ var Login = function() {
                     required: "Username is required."
                 },
                 password: {
-                    required: "Password is required."
+                    required: "password is required."
                 }
             },
 

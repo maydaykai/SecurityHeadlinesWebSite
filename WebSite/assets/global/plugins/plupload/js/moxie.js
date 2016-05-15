@@ -4627,7 +4627,7 @@ define("moxie/xhr/XMLHttpRequest", [
 			@param {String} url URL to request
 			@param {Boolean} [async=true] If false request will be done in synchronous manner. Asynchronous by default.
 			@param {String} [user] Username to use in HTTP authentication process on server-side
-			@param {String} [password] Password to use in HTTP authentication process on server-side
+			@param {String} [password] password to use in HTTP authentication process on server-side
 			*/
 			open: function(method, url, async, user, password) {
 				var urlp;

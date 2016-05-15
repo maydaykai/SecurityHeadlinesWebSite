@@ -4420,7 +4420,7 @@ function parse_RC4Header(blob, length) {
     return o;
 }
 
-/* [MS-OFFCRYPTO] 2.3.7.1 Binary Document Password Verifier Derivation */
+/* [MS-OFFCRYPTO] 2.3.7.1 Binary Document password Verifier Derivation */
 function crypto_CreatePasswordVerifier_Method1(Password) {
     var Verifier = 0x0000, PasswordArray;
     var PasswordDecoded = _JS2ANSI(Password);
@@ -9364,7 +9364,7 @@ function parse_workbook(blob, options) {
                     if(opts.WTF) console.error(val);
                     if(!options.password) throw new Error("File is password-protected");
                     if(val.Type !== 0) throw new Error("Encryption scheme unsupported");
-                    if(!val.valid) throw new Error("Password is incorrect");
+                    if(!val.valid) throw new Error("password is incorrect");
                     break;
                 case 'WriteAccess': opts.lastuser = val; break;
                 case 'FileSharing': break; //TODO
@@ -9407,7 +9407,7 @@ function parse_workbook(blob, options) {
                 case 'ExternSheet': supbooks[sbc] = supbooks[sbc].concat(val); sbci += val.length; break;
 
                 case 'Protect': out["!protect"] = val; break; /* for sheet or book */
-                case 'Password': if(val !== 0 && opts.WTF) console.error("Password verifier: " + val); break;
+                case 'password': if(val !== 0 && opts.WTF) console.error("password verifier: " + val); break;
                 case 'Prot4Rev': case 'Prot4RevPass': break; /*TODO: Revision Control*/
 
                 case 'BoundSheet8': {
@@ -10690,7 +10690,7 @@ var XLSRecordEnum = {
     0x0010: { n:"CalcDelta", f:parse_CalcDelta },
     0x0011: { n:"CalcIter", f:parse_CalcIter },
     0x0012: { n:"Protect", f:parse_Protect },
-    0x0013: { n:"Password", f:parse_Password },
+    0x0013: { n:"password", f:parse_Password },
     0x0014: { n:"Header", f:parse_Header },
     0x0015: { n:"Footer", f:parse_Footer },
     0x0017: { n:"ExternSheet", f:parse_ExternSheet },

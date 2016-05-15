@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -42,12 +45,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArticleBll.cs" />
+    <Compile Include="ChannelBll.cs" />
+    <Compile Include="CommentBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserBll.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{ae1cc9de-334f-403f-a365-b3d343806244}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{48ef0521-b68f-4b03-85b6-3c325c6b19f3}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dal\Dal.csproj">
       <Project>{eb726849-2c53-48ab-8a49-9dfaaf5946a9}</Project>

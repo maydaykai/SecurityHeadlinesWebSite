@@ -3319,7 +3319,7 @@ $(function(){
 **/ 
 
 /*
-Password
+password
 */
 (function ($) {
     "use strict";

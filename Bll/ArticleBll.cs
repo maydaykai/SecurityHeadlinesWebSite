@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Dal;
 using Model;
 using Common;
+using Newtonsoft.Json;
+using Core;
 
 namespace Bll
 {
@@ -53,6 +55,13 @@ namespace Bll
                 }
             }
             return list;
+        }
+
+        public ArticleModel Detail(string id)
+        {
+            var model = DataConstructor.Factory("article");
+            var resultData = model.Get(id);
+            return JsonConvert.DeserializeObject<ArticleModel>(resultData);
         }
     }
 }
