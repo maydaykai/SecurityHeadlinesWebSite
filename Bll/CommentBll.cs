@@ -24,7 +24,7 @@ namespace Bll
             var factory = DataConstructor.Factory("comment");
             var data = factory.Create(JsonConvert.SerializeObject(model));
             model = JsonConvert.DeserializeObject<CommentModel>(data);
-            return string.IsNullOrEmpty(model.id);
+            return !string.IsNullOrEmpty(model.id);
         }
     }
 }
