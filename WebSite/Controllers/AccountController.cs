@@ -74,7 +74,8 @@ namespace WebSite.Controllers
             var account = new UserModel
             {
                 id = user.id,
-                nickname = user.nickname ?? user.username
+                nickname = user.nickname ?? user.username,
+                username = user.username
             };
             Session["Account"] = account;
 

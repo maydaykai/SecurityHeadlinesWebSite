@@ -5,6 +5,7 @@ using Model;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Common;
 
 namespace WebSite.Controllers
 {
@@ -52,7 +53,7 @@ namespace WebSite.Controllers
             var userList = new UserBll().GetAllList();
             foreach (var item in list)
             {
-                if (!IsNumAndEnCh(item.username)) continue;
+                if (IsNumAndEnCh(item.username)) continue;
                 foreach (var user in userList.Where(user => item.username.Equals(user.username)))
                 {
                     item.username = user.nickname;
@@ -73,14 +74,24 @@ namespace WebSite.Controllers
             ViewData["Id"] = id;
             return View(articleModel);
         }
+        [HttpPost]
+        public JsonResult Add(CommentModel model)
+        {
+            var userName = GetUserName();
+            if(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(model.content) || string.IsNullOrEmpty(model.rela_article))
+                return Json(JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
+            model.username = userName;
+            var flag = new CommentBll().Add(model);
+            return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
+        }
         /// <summary>  
-        /// 判断输入的字符串是否只包含数字和英文字母  
+        /// 判断输入的字符串是否只包含数字
         /// </summary>  
         /// <param name="input"></param>  
         /// <returns></returns>  
         public static bool IsNumAndEnCh(string input)
         {
-            var pattern = @"^[A-Za-z0-9]+$";
+            var pattern = @"^[0-9]+$";
             var regex = new Regex(pattern);
             return regex.IsMatch(input);
         }
