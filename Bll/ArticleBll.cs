@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,21 +39,11 @@ namespace Bll
             pager.totalRows = totalRows;
             if (dt != null)
             {
-                foreach (DataRow item in dt.Rows)
-                {
-                    var model = new ArticleModel
+                list.AddRange(from DataRow item in dt.Rows
+                    select new ArticleModel
                     {
-                        id = item["oid"].ToString(),
-                        title = item["title"].ToString(),
-                        content =
-                            HtmlHelper.DeleteHtml(HttpContext.Current.Server.HtmlDecode(item["Content"].ToString()))
-                                .GetSubString(0, 36),
-                        source = item["source"]?.ToString(),
-                        pubTime = DateTime.Parse(item["pubTime"].ToString()),
-                        imgs = item["imgs"]?.ToString()
-                    };
-                    list.Add(model);
-                }
+                        id = item["oid"].ToString(), title = item["title"].ToString(), content = HtmlHelper.DeleteHtml(HttpContext.Current.Server.HtmlDecode(item["Content"].ToString())).GetSubString(0, 86), source = item["source"]?.ToString(), pubTime = DateTime.Parse(item["pubTime"].ToString()), imgs = item["imgs"]?.ToString(), commentCount = new CommentBll().GetCount(item["oid"].ToString())
+                    });
             }
             return list;
         }

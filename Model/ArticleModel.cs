@@ -16,5 +16,6 @@ namespace Model
         public string type { get; set; }
         public DateTime pubTime { get; set; }
         public string source { get; set; }
+        public int commentCount { get; set; }
     }
 }

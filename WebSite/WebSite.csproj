@@ -4007,6 +4007,7 @@
     <Content Include="assets\layouts\layout3\css\themes\yellow-crusta.min.css" />
     <Content Include="assets\layouts\layout3\css\themes\yellow-orange.css" />
     <Content Include="assets\layouts\layout3\css\themes\yellow-orange.min.css" />
+    <Content Include="assets\layouts\layout3\img\1461908288.png" />
     <Content Include="assets\layouts\layout3\img\ajax-loading.gif" />
     <Content Include="assets\layouts\layout3\img\ajax-modal-loading.gif" />
     <Content Include="assets\layouts\layout3\img\avatar.png" />

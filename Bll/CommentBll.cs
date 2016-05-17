@@ -26,5 +26,12 @@ namespace Bll
             model = JsonConvert.DeserializeObject<CommentModel>(data);
             return !string.IsNullOrEmpty(model.id);
         }
+        public int GetCount(string id)
+        {
+            var model = DataConstructor.Factory("comment");
+            var filter = "{\"where\":{\"rela_article\":\"" + id + "\"}}";
+            var data = model.Count(filter);
+            return JsonConvert.DeserializeObject<Dictionary<string,int>>(data)["count"];
+        }
     }
 }
