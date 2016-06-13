@@ -48,6 +48,7 @@
     <Compile Include="ChannelBll.cs" />
     <Compile Include="CommentBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserArticleBll.cs" />
     <Compile Include="UserBll.cs" />
   </ItemGroup>
   <ItemGroup>

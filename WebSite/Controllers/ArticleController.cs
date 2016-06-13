@@ -84,6 +84,15 @@ namespace WebSite.Controllers
             var flag = new CommentBll().Add(model);
             return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
         }
+        [HttpPost]
+        public JsonResult AddArticle(ArticleModel model)
+        {
+            var userName = GetUserName();
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(model.content) || string.IsNullOrEmpty(model.title))
+                return Json(JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
+            var flag = new ArticleBll().Add(model);
+            return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
+        }
         /// <summary>  
         /// 判断输入的字符串是否只包含数字
         /// </summary>  

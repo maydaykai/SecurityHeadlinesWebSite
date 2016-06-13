@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using System.Threading.Tasks;
+using APICloud.Rest;
 using Dal;
 using Model;
 using Common;
@@ -15,6 +16,7 @@ namespace Bll
 {
     public class ArticleBll
     {
+        readonly Factory _factory = DataConstructor.Factory("article");
         /// <summary>
         /// 获取数据列表
         /// </summary>
@@ -50,9 +52,15 @@ namespace Bll
 
         public ArticleModel Detail(string id)
         {
-            var model = DataConstructor.Factory("article");
-            var resultData = model.Get(id);
+            var resultData = _factory.Get(id);
             return JsonConvert.DeserializeObject<ArticleModel>(resultData);
+        }
+
+        public bool Add(ArticleModel model)
+        {
+            var data = _factory.Create(JsonConvert.SerializeObject(model));
+            model = JsonConvert.DeserializeObject<ArticleModel>(data);
+            return !string.IsNullOrEmpty(model.id);
         }
     }
 }
