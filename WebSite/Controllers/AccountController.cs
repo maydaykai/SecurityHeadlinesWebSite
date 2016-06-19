@@ -12,6 +12,7 @@ using WebSite.Models;
 using Common;
 using Model;
 using Bll;
+using Newtonsoft.Json;
 
 namespace WebSite.Controllers
 {
@@ -81,7 +82,23 @@ namespace WebSite.Controllers
 
             return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult UpdatePassword()
+        {
+            var returnUrl = HttpContext.Request.UrlReferrer;
+            Session["returnUrl"] = returnUrl;
+            return View();
+        }
+        public JsonResult UpdatePassword(string id, string userName, string oldPassword, string newPassword)
+        {
+            var model = new UserBll();
+            var user = model.UserLogin(userName, oldPassword);
+            if (user.id == null)
+            {
+                return Json(JsonHandler.CreateMessage(0, "原始密码错误"), JsonRequestBehavior.AllowGet);
+            }
+            var userModel = model.GetUserModel(id);
+            return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
+        }
         //
         // POST: /Account/Login
         //[HttpPost]

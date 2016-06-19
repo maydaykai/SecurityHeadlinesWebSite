@@ -1,0 +1,51 @@
+﻿@model Model.UserArticleModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN PAGE BREADCRUMBS -->
+<ul class="page-breadcrumb breadcrumb">
+    <li>
+        <a href="@Url.Action("Index", "Article")">首页</a>
+        <i class="fa fa-circle"></i>
+    </li>
+    <li>
+        <span>文章详情</span>
+    </li>
+</ul>
+<!-- END PAGE BREADCRUMBS -->
+<!-- BEGIN PAGE CONTENT INNER -->
+<div class="page-content-inner">
+    <div class="blog-page blog-content-2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="blog-single-content bordered blog-container">
+                    <div class="blog-single-head">
+                        <h1 class="blog-single-head-title">@Html.DisplayFor(model => model.title)</h1>
+                        <div class="blog-single-head-date">
+                            <div class="left lfooter mb20">
+                                <span class="lbtn comment"></span>
+                                <span class="lbtn comment"></span>
+                                <span class="lbtn time" data-publishtime="1458871218">@{string pubTime = Model.createdAt.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="content" class="blog-single-desc">
+                        @Html.Raw(Model.content)
+                    </div>
+                    <div class="blog-single-foot">
+                        <ul class="blog-post-tags">
+                            <li class="uppercase">
+                                <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a></div>
+                                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"share":{},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["weixin","qzone","tsina"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

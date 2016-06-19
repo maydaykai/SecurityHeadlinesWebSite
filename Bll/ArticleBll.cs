@@ -49,18 +49,10 @@ namespace Bll
             }
             return list;
         }
-
         public ArticleModel Detail(string id)
         {
             var resultData = _factory.Get(id);
             return JsonConvert.DeserializeObject<ArticleModel>(resultData);
-        }
-
-        public bool Add(ArticleModel model)
-        {
-            var data = _factory.Create(JsonConvert.SerializeObject(model));
-            model = JsonConvert.DeserializeObject<ArticleModel>(data);
-            return !string.IsNullOrEmpty(model.id);
         }
     }
 }

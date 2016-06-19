@@ -148,7 +148,7 @@
             };
             $main.on("click", "#btn_save", function() {
                 var content = $("#comment").val();
-                if ($.trim(comment) == "") {
+                if ($.trim(content) == "") {
                     alert("请输入评论！");
                     return;
                 }
@@ -158,7 +158,6 @@
                     var obj = new Object();
                     obj.content = content;
                     obj.rela_article = "@id";
-                    var jsonobj = JSON.stringify(obj);
                     $.post('/Article/Add', obj,
                     function (data) {
                         alert(data.message);

@@ -1,0 +1,143 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var account = (Model.UserModel)Session["account"];
+}
+<script src="~/assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="~/assets/global/plugins/ckeditor/adapters/jquery.js" type="text/javascript"></script>
+<!-- BEGIN PAGE CONTENT INNER -->
+<div class="page-content-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN PROFILE SIDEBAR -->
+            <div class="profile-sidebar">
+                <!-- PORTLET MAIN -->
+                <div class="portlet light profile-sidebar-portlet ">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="../assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name"> @account.nickname </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <div class="profile-userbuttons">
+                        @*<a href="page_user_password.html" type="button" class="btn btn-circle green btn-sm">修改密码</a>*@
+                        <a href="/Article/Add" type="button" class="btn btn-circle red btn-sm">发表文章</a>
+                    </div>
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li>
+                                <a href="/Article/UserArticleList?id=@account.id">
+                                    <i class="icon-note"></i> 我的文章
+                                </a>
+                            </li>
+                            @*<li>
+                                <a href="page_user_profile_2.html">
+                                    <i class="icon-bubble"></i> 我的评论
+                                </a>
+                            </li>*@
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+                <!-- END PORTLET MAIN -->
+            </div>
+            <!-- END BEGIN PROFILE SIDEBAR -->
+            <!-- BEGIN PROFILE CONTENT -->
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- BEGIN PORTLET -->
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-pencil font-red-mint"></i>
+                                    <span class="caption-subject font-red-mint bold uppercase">发表文章</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <form>
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">
+                                                文字标题
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="title" name="phone" placeholder="请输入标题">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">
+                                                文章内容
+                                                <span class="required"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <textarea class="ckeditor form-control" name="editor2" id="content" rows="6" data-error-container="#editor2_error"></textarea>
+                                                <div id="editor2_error"> </div>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:;" id="btn_save" class="btn red mt20 mb30" style="margin-left:22.5%">保存</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- END PORTLET -->
+                    </div>
+                </div>
+            </div>
+            <!-- END PROFILE CONTENT -->
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT INNER -->
+<script>
+    (function($) {
+        var eventsList = function() {
+            var $main = $('.portlet-body');
+            var getRealLen;
+            $main.on("click", "#btn_save", function() {
+                var title = $("#title").val();
+                var content = $("#content").val();
+                if ($.trim(title) == "") {
+                    alert("请输入文章标题！");
+                    return;
+                }
+                if ($.trim(content) == "") {
+                    alert("请输入文章内容！");
+                    return;
+                }
+                if (getRealLen($.trim(content)) <= 10) {
+                    alert("您输入文章内容太少了！");
+                    return;
+                }
+                var obj = new Object();
+                obj.title = title;
+                obj.content = content;
+                $.post('/Article/AddArticle', obj,
+                function (data) {
+                    alert(data.message);
+                    window.location = window.location;
+                }, "json");
+
+            });
+            getRealLen = function (str) {
+                return str.replace(/[^\x00-\xff]/g, '__').length; //这个把所有双字节的都给匹配进去了
+            };
+            this.init = function () {
+            };
+        };
+
+        $(function () {
+            $('#content').ckeditor();
+            var app = new eventsList();
+            app.init();
+        });
+    })(window.jQuery);
+</script>

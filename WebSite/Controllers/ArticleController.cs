@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using Bll;
 using Model;
 using System.Web.Mvc;
@@ -16,6 +17,16 @@ namespace WebSite.Controllers
             return RedirectToAction("List", new {id = 100});
         }
         public ActionResult List(string id)
+        {
+            ViewData["Id"] = id;
+            return View();
+        }
+        public ActionResult UserArticleList(string id)
+        {
+            ViewData["Id"] = id;
+            return View();
+        }
+        public ActionResult Add(string id)
         {
             ViewData["Id"] = id;
             return View();
@@ -40,7 +51,16 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetUserArticleList(string id, int page)
+        {
+            var list = new UserArticleBll().GetList(id, page);
+            var json = new
+            {
+                list,
+                total = list.Count
+            };
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetCommentList(string id)
         {
             var list = new CommentBll().GetList(id);
@@ -74,6 +94,12 @@ namespace WebSite.Controllers
             ViewData["Id"] = id;
             return View(articleModel);
         }
+        public ActionResult UserArticleDetail(string id)
+        {
+            var articleModel = new UserArticleBll().Detail(id);
+            ViewData["Id"] = id;
+            return View(articleModel);
+        }
         [HttpPost]
         public JsonResult Add(CommentModel model)
         {
@@ -85,13 +111,16 @@ namespace WebSite.Controllers
             return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
         }
         [HttpPost]
-        public JsonResult AddArticle(ArticleModel model)
+        [ValidateInput(false)]
+        public JsonResult AddArticle(UserArticleModel model)
         {
             var userName = GetUserName();
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(model.content) || string.IsNullOrEmpty(model.title))
-                return Json(JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
-            var flag = new ArticleBll().Add(model);
-            return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
+                return Json(JsonHandler.CreateMessage(0, "添加失败"), JsonRequestBehavior.DenyGet);
+            model.status = 0;
+            model.user_id = GetUserId();
+            var flag = new UserArticleBll().Add(model);
+            return Json(flag ? JsonHandler.CreateMessage(1, "添加成功") : JsonHandler.CreateMessage(0, "添加失败"), JsonRequestBehavior.DenyGet);
         }
         /// <summary>  
         /// 判断输入的字符串是否只包含数字

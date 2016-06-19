@@ -4831,6 +4831,10 @@
     <Content Include="Views\Article\List.cshtml" />
     <Content Include="Views\Article\Detail.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\UpdatePassword.cshtml" />
+    <Content Include="Views\Article\Add.cshtml" />
+    <Content Include="Views\Article\UserArticleList.cshtml" />
+    <Content Include="Views\Article\UserArticleDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

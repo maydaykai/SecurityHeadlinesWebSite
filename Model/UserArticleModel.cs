@@ -13,5 +13,7 @@ namespace Model
         public string content { get; set; }
         public string imgs { get; set; }
         public int status { get; set; }
+        public string user_id { get; set; }
+        public DateTime createdAt { get; set; }
     }
 }
