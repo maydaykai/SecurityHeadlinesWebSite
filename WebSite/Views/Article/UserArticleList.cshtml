@@ -52,8 +52,8 @@
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
                     <div class="profile-userbuttons">
-                        @*<a href="page_user_password.html" type="button" class="btn btn-circle green btn-sm">修改密码</a>*@
-                        <a href="/Article/Add" type="button" class="btn btn-circle red btn-sm">发表文章</a>
+                        <a href="@Url.Action("UpdatePassword","Account")" type="button" class="btn btn-circle green btn-sm">修改密码</a>
+                        <a href="@Url.Action("Add","Article")" type="button" class="btn btn-circle red btn-sm">发表文章</a>
                     </div>
                     <!-- SIDEBAR MENU -->
                     <div class="profile-usermenu">
@@ -125,6 +125,7 @@
                 <div class="footer">
                     <div class="left lfooter">
                         <span class="lbtn time">{{dateHelper createdAt}}</span>
+                        <span class="lbtn time">{{statusHelper status}}</span>
                     </div>
                 </div>
             </div>
@@ -146,6 +147,14 @@
                     return "";
                 var imgs = value.split(',');
                 return imgs[0];
+            });
+            Handlebars.registerHelper("statusHelper", function (value) {
+                if (value == 0)
+                    return "待审核";
+                if (value == 1)
+                    return "审核通过";
+                if (value == 2)
+                    return "审核不通过";
             });
             Handlebars.registerHelper("dateHelper", function (value) {
                 var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));

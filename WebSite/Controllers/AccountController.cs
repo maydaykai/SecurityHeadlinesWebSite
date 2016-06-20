@@ -84,8 +84,6 @@ namespace WebSite.Controllers
         }
         public ActionResult UpdatePassword()
         {
-            var returnUrl = HttpContext.Request.UrlReferrer;
-            Session["returnUrl"] = returnUrl;
             return View();
         }
         public JsonResult UpdatePassword(string id, string userName, string oldPassword, string newPassword)

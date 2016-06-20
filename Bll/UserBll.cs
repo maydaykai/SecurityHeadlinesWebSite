@@ -32,7 +32,7 @@ namespace Bll
         public UserModel UpdatePassword(string id, string password)
         {
             var model = DataConstructor.Factory("user");
-            var data = model.Edit(id, password);
+            var data = model.Edit(id, new { password });
             return JsonConvert.DeserializeObject<UserModel>(data);
         }
     }

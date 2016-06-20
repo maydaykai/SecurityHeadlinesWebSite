@@ -18,7 +18,7 @@
                 <div class="portlet light profile-sidebar-portlet ">
                     <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
-                        <img src="../assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                        <img src="~/assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
                     </div>
                     <!-- END SIDEBAR USERPIC -->
                     <!-- SIDEBAR USER TITLE -->
@@ -27,14 +27,14 @@
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
                     <div class="profile-userbuttons">
-                        @*<a href="page_user_password.html" type="button" class="btn btn-circle green btn-sm">修改密码</a>*@
-                        <a href="/Article/Add" type="button" class="btn btn-circle red btn-sm">发表文章</a>
+                        <a href="@Url.Action("UpdatePassword","Account")" type="button" class="btn btn-circle green btn-sm">修改密码</a>
+                        <a href="@Url.Action("Add","Article")" type="button" class="btn btn-circle red btn-sm">发表文章</a>
                     </div>
                     <!-- SIDEBAR MENU -->
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li>
-                                <a href="/Article/UserArticleList?id=@account.id">
+                                <a href="@Url.Action("UserArticleList", "Article")?id=@account.id">
                                     <i class="icon-note"></i> 我的文章
                                 </a>
                             </li>
@@ -123,7 +123,8 @@
                 $.post('/Article/AddArticle', obj,
                 function (data) {
                     alert(data.message);
-                    window.location = window.location;
+                    if (data.type == 1)
+                        window.location = "@Url.Action("UserArticleList", "Article")?id=@account.id";
                 }, "json");
 
             });
