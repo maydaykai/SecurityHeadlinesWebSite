@@ -92,6 +92,8 @@ namespace WebSite.Controllers
         {
             var articleModel = new ArticleBll().Detail(id);
             ViewData["Id"] = id;
+            var ht = JSSDK.getSignPackage();
+            ViewData["jssdk"] = ht;
             return View(articleModel);
         }
         public ActionResult UserArticleDetail(string id)
