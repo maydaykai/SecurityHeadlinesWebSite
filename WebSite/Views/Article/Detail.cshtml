@@ -38,31 +38,6 @@
                     <div class="blog-single-foot">
                         <ul class="blog-post-tags">
                             <li class="uppercase">
-                                @*<div class="bdsharebuttonbox" data-tag="share_1">
-                                    <a href="#" class="bds_more" data-cmd="more"></a>
-                                    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">
-                                    </a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                                    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                                </div>
-                                <script>
-                                    window._bd_share_config = {
-                                        "common": {
-                                            "bdSnsKey": {},
-                                            "bdText": "",
-                                            "bdMini": "2",
-                                            "bdMiniList": false,
-                                            "bdPic": "",
-                                            "bdStyle": "1",
-                                            "bdSize": "32"
-                                        },
-                                        "share": {},
-                                        "selectShare": {
-                                            "bdContainerClass": null,
-                                            "bdSelectMiniList": ["weixin", "qzone", "tsina"]
-                                        }
-                                    };
-	                                with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
-                                </script>*@
                                 <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
                                 </div>
                                 <script>
@@ -114,13 +89,7 @@
 @{
     var id = ViewData["Id"];
     var jssdk = ViewData["jssdk"] as System.Collections.Hashtable;
-}
-@{
-    var flag = false;
-    if (Session["account"] != null)
-    {
-        flag = true;
-    }
+    var flag = Session["account"] != null;
 }
 <script>
     (function($) {
@@ -212,20 +181,20 @@
     })(window.jQuery);
     wx.config({
         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: @jssdk["appId"].ToString(), // 必填，公众号的唯一标识
-        timestamp: @jssdk["timestamp"].ToString(), // 必填，生成签名的时间戳
-        nonceStr: @jssdk["nonceStr"].ToString(), // 必填，生成签名的随机串
-        signature: @jssdk["signature"].ToString(),// 必填，签名，见附录1
+        appId: '@jssdk["appId"].ToString()', // 必填，公众号的唯一标识
+        timestamp: '@jssdk["timestamp"].ToString()', // 必填，生成签名的时间戳
+        nonceStr: '@jssdk["nonceStr"].ToString()', // 必填，生成签名的随机串
+        signature: '@jssdk["signature"].ToString()',// 必填，签名，见附录1
         jsApiList: [onMenuShareTimeline,onMenuShareAppMessage,onMenuShareQQ,onMenuShareWeibo,onMenuShareQZone] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
     wx.onMenuShareTimeline({
-        title: '哈哈哈', // 分享标题
-        link: 'http://www.aftop.cn', // 分享链接
+        title: '@Model.title', // 分享标题
+        link: 'http://www.aftop.cn/Article/Detail/@Model.id', // 分享链接
         imgUrl: '', // 分享图标
-        success: function () { 
+        success: function () {
             // 用户确认分享后执行的回调函数
         },
-        cancel: function () { 
+        cancel: function () {
             // 用户取消分享后执行的回调函数
         }
     });
