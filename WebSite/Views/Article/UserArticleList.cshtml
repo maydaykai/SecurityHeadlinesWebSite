@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var account = (Model.UserModel)Session["account"];
 }
 <style>
     #wrapper {
@@ -48,7 +49,7 @@
                     <!-- END SIDEBAR USERPIC -->
                     <!-- SIDEBAR USER TITLE -->
                     <div class="profile-usertitle">
-                        <div class="profile-usertitle-name"> Marcus Doe </div>
+                        <div class="profile-usertitle-name"> @account.nickname </div>
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
                     <div class="profile-userbuttons">

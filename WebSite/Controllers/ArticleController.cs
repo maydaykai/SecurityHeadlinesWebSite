@@ -19,15 +19,20 @@ namespace WebSite.Controllers
         public ActionResult List(string id)
         {
             ViewData["Id"] = id;
+            ViewData["ChannelId"] = id;
             return View();
         }
         public ActionResult UserArticleList(string id)
         {
+            if (Session["Account"] == null)
+                return RedirectToAction("Index", "Account");
             ViewData["Id"] = id;
             return View();
         }
         public ActionResult Add(string id)
         {
+            if (Session["Account"] == null)
+                return RedirectToAction("Index", "Account");
             ViewData["Id"] = id;
             return View();
         }
@@ -91,6 +96,7 @@ namespace WebSite.Controllers
         public ActionResult Detail(string id)
         {
             var articleModel = new ArticleBll().Detail(id);
+            ViewData["ChannelId"] = articleModel.rela_chan;
             ViewData["Id"] = id;
             var ht = JSSDK.getSignPackage();
             ViewData["jssdk"] = ht;

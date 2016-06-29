@@ -51,7 +51,6 @@ namespace WebSite.Controllers
         {
             return (UserModel) Session["Account"];
         }
-
         //protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
         //{
         //    return new ToJsonResult

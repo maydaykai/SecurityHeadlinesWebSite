@@ -84,17 +84,20 @@ namespace WebSite.Controllers
         }
         public ActionResult UpdatePassword()
         {
+            if (Session["Account"] == null)
+                return RedirectToAction("Index", "Account");
             return View();
         }
-        public JsonResult UpdatePassword(string id, string userName, string oldPassword, string newPassword)
+        [HttpPost]
+        public JsonResult UpdatePassword(string oldPassword, string newPassword)
         {
             var model = new UserBll();
-            var user = model.UserLogin(userName, oldPassword);
+            var user = model.UserLogin(GetUserName(), oldPassword);
             if (user.id == null)
             {
                 return Json(JsonHandler.CreateMessage(0, "原始密码错误"), JsonRequestBehavior.AllowGet);
             }
-            var userModel = model.GetUserModel(id);
+            var userModel = model.UpdatePassword(user.id, GetUserId(), newPassword);
             return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
         }
         //
