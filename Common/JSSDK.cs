@@ -26,7 +26,7 @@ namespace Common
         public static Hashtable getSignPackage()
         {
             //AccessToken ace = Getaccess();
-            //string token = GetExistAccessToken();
+            string token = GetExistAccessToken();
             string JSTicketTicket = GetExistJSTicket();
             string url = HttpContext.Current.Request.Url.AbsoluteUri;
             string timestamp = Convert.ToString(ConvertDateTimeInt(DateTime.Now));
@@ -34,7 +34,7 @@ namespace Common
 
 
             // 这里参数的顺序要按照 key 值 ASCII 码升序排序  
-            string rawstring = "JSTicket_ticket=" + JSTicketTicket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + url + "";
+            string rawstring = "jsapi_ticket=" + JSTicketTicket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + url + "";
 
             string signature = FormsAuthentication.HashPasswordForStoringInConfigFile(rawstring, "SHA1").ToLower();
             //string signature = SHA1_Hash(rawstring);
@@ -54,7 +54,7 @@ namespace Common
         public static Hashtable getSignPackage(string url)
         {
             //AccessToken ace = Getaccess();
-            //string token = GetExistAccessToken();
+            string token = GetExistAccessToken();
             string JSTicketTicket = GetExistJSTicket();
             string timestamp = Convert.ToString(ConvertDateTimeInt(DateTime.Now));
             string nonceStr = createNonceStr();
@@ -251,7 +251,7 @@ namespace Common
     }
     public static class SiteSettings
     {
-        public static string wxAppId = "wxceca3b711b8bdbcf";
-        public static string wxAppSecret = "49ee9252b6d63c39a496ee473db16645";
+        public static string wxAppId = "wx1996529d92e080bf";
+        public static string wxAppSecret = "8e87b636c13a4eb1a6c46ddf2ca758e4";
     }
 }
