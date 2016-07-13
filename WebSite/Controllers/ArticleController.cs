@@ -125,7 +125,7 @@ namespace WebSite.Controllers
             var userName = GetUserName();
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(model.content) || string.IsNullOrEmpty(model.title))
                 return Json(JsonHandler.CreateMessage(0, "添加失败"), JsonRequestBehavior.DenyGet);
-            model.status = 0;
+            model.status = 1;
             model.user_id = GetUserId();
             var flag = new UserArticleBll().Add(model);
             return Json(flag ? JsonHandler.CreateMessage(1, "添加成功") : JsonHandler.CreateMessage(0, "添加失败"), JsonRequestBehavior.DenyGet);

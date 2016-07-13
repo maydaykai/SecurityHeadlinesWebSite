@@ -29,6 +29,19 @@ namespace Bll
             var data = model.Login(userName, password);
             return JsonConvert.DeserializeObject<UserModel>(data);
         }
+        public UserModel UserReg(UserModel userModel, ref string errorMsg)
+        {
+            var model = DataConstructor.Factory("user");
+            var data = model.Create(new
+            {
+                username = userModel.username,
+                password = userModel.password,
+                mobile = userModel.username,
+                email = userModel.email
+            });
+            errorMsg = data;
+            return JsonConvert.DeserializeObject<UserModel>(data);
+        }
         public UserModel UpdatePassword(string authorization, string id, string password)
         {
             var model = DataConstructor.Factory("user", authorization);

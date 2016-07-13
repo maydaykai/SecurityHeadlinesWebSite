@@ -28,6 +28,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="description" />
     <meta content="" name="author" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -51,7 +52,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <!-- END HEAD -->
-<body class=" login">
+<body class="login">
     <!-- BEGIN LOGO -->
     <div class="logo">
         <a href="@Url.Action("List", "Article")/100">
@@ -82,7 +83,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <label class="control-label visible-ie8 visible-ie9">password</label>
                 <div class="input-icon">
                     <i class="fa fa-lock"></i>
-                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="password" name="password" id="password" />
+                    <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" id="password" />
                 </div>
             </div>
             <div class="form-actions">
@@ -93,10 +94,11 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="snsbox" style="text-align: left;">
                     <div class="snsbox-inner">
                         <div class="snszone">
-                            <i class="sns-btn sns-weixin" ga_event="click_share_interactive" ga_label="weixin" data-type="" title="微信登陆">
+                            @*<i class="sns-btn sns-weixin" ga_event="click_share_interactive" ga_label="weixin" data-type="" title="微信登陆">
                             </i>
                             <i class="sns-btn sns-qzone" ga_event="click_share_interactive" ga_label="qzone" data-type="qzone" title="QQ登陆"></i>
-                            <i class="sns-btn sns-weibo" ga_event="click_share_interactive" ga_label="tsina" data-type="tsina" title="微博登陆"></i>
+                            <i class="sns-btn sns-weibo" ga_event="click_share_interactive" ga_label="tsina" data-type="tsina" title="微博登陆"></i>*@
+                            <img alt="Connect_logo_1.png" src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_1.png" onclick="window.location.href = '@Url.Action("QQLogin","Account")'">
                         </div>
                     </div>
                 </div>
@@ -134,9 +136,9 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <!-- END THEME LAYOUT SCRIPTS -->
 <script>
-    var Login = function () {
+    var Login = function() {
 
-        var handleLogin = function () {
+        var handleLogin = function() {
             $('.login-form').validate({
                 errorElement: 'span', //default input error message container
                 errorClass: 'help-block', // default input error message class
@@ -162,42 +164,42 @@ License: You must have a valid license purchased only from themeforest(the above
                     }
                 },
 
-                invalidHandler: function (event, validator) { //display error alert on form submit   
+                invalidHandler: function(event, validator) { //display error alert on form submit   
                     $('.alert-danger', $('.login-form')).show();
                 },
 
-                highlight: function (element) { // hightlight error inputs
+                highlight: function(element) { // hightlight error inputs
                     $(element)
-	                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
                 },
 
-                success: function (label) {
+                success: function(label) {
                     label.closest('.form-group').removeClass('has-error');
                     label.remove();
                 },
 
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     error.insertAfter(element.closest('.input-icon'));
                 },
 
-                submitHandler: function (form) {
+                submitHandler: function(form) {
                     $('.alert-info').show();
                     $('.alert-danger').hide();
                     $('#btn_login').attr("disabled", "disabled");
                     $.post('/Account/Login', {
-                        userName: $("#userName").val(), password: $("#password").val()
-                    },
-                    function (data) {
-                        if (data.type == "1") {
-                            window.location = data.value ? data.value : "/Article/Index";
-                        }
-                        else {
-                            $('.alert-danger').find("span").text(data.message);
-                            $('.alert-danger').show();
-                            $('#btn_login').removeAttr("disabled");
-                        }
-                        $('.alert-info').hide();
-                    }, "json");
+                            userName: $("#userName").val(),
+                            password: $("#password").val()
+                        },
+                        function(data) {
+                            if (data.type == "1") {
+                                window.location = data.value ? data.value : "/Article/Index";
+                            } else {
+                                $('.alert-danger').find("span").text(data.message);
+                                $('.alert-danger').show();
+                                $('#btn_login').removeAttr("disabled");
+                            }
+                            $('.alert-info').hide();
+                        }, "json");
                 }
             });
 
@@ -213,29 +215,47 @@ License: You must have a valid license purchased only from themeforest(the above
 
         return {
             //main function to initiate the module
-            init: function () {
+            init: function() {
 
                 handleLogin();
 
                 // init background slide images
                 $.backstretch([
-                    "../assets/pages/media/bg/1.jpg",
-                    "../assets/pages/media/bg/2.jpg",
-                    "../assets/pages/media/bg/3.jpg",
-                    "../assets/pages/media/bg/4.jpg"
-                ], {
-                    fade: 1000,
-                    duration: 8000
-                }
+                        "../assets/pages/media/bg/1.jpg",
+                        "../assets/pages/media/bg/2.jpg",
+                        "../assets/pages/media/bg/3.jpg",
+                        "../assets/pages/media/bg/4.jpg"
+                    ], {
+                        fade: 1000,
+                        duration: 8000
+                    }
                 );
             }
         };
 
     }();
 
-    $(function () {
+    $(function() {
         Login.init();
     });
 </script>
+@*<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101334252" data-redirecturi="http://www.aftop.cn/" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+    QC.Login({
+        btnId : "qqLoginBtn",//插入按钮的html标签id
+        size : "C_S",//按钮尺寸
+        scope : "get_user_info",//展示授权，全部可用授权可填 all
+        display : "pc"//应用场景，可选
+    });
+    if (QC.Login.check()) {//如果已登录
+        QC.Login.getMe(function (openId, accessToken) {
+            alert(["当前登录用户的", "openId为：" + openId, "accessToken为：" + accessToken].join("\n"));
+        });
+        //这里可以调用自己的保存接口
+        //...
+    }
+</script>*@
 </body>
 </html>

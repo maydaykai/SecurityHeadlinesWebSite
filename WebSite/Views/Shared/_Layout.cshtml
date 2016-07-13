@@ -82,11 +82,11 @@
                                         <span class="username">登录</span>
                                     </a>
                                 </li>
-                                @*<li class="dropdown dropdown-extended">
+                                <li class="dropdown dropdown-extended">
                                     <a data-target="#zc" data-toggle="modal">
                                         <span class="username">注册</span>
                                     </a>
-                                </li>*@
+                                </li>
                             }
                             <!-- END USER LOGIN DROPDOWN -->
                             <!-- BEGIN QUICK SidEBAR TOGGLER -->
@@ -104,7 +104,7 @@
         <div class="page-header-menu">
             <div class="container">
                 <!-- BEGIN HEADER SEARCH BOX -->
-                <form class="search-form" action="page_general_search.html" method="GET">
+                <form class="search-form">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" name="query">
                         <span class="input-group-btn">
@@ -173,66 +173,186 @@
     <!-- END INNER FOOTER -->
     <!-- END FOOTER -->
     <!--弹出-->
-    <div id="zc" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title title-color-blue">注册账号</h4>
-                </div>
-                <form action="#" class="form-horizontal" id="submit_form" method="POST" novalidate="novalidate">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_5_1">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            登陆名称
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" name="phone" />
-                                        </div>
+<div id="zc" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title title-color-blue">注册账号</h4>
+            </div>
+            <form class="form-horizontal" id="submit_form">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_5_1">
+                                <div class="alert alert-danger display-hide">
+                                    <button class="close" data-close="alert"></button>
+                                    <span> Enter any username and password. </span>
+                                </div>
+                                <div class="alert alert-info display-hide">
+                                    <span> 加载中... </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">
+                                        手机号码
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="phone" name="phone" id="phone" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            登录密码
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" name="phone" />
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">
+                                        登录密码
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="password" name="password" id="password" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            手机号码
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" name="phone" />
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">
+                                        确认密码
+                                        <span class="required"> * </span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="password" name="confirm_password" id="confirm_password" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            邮箱
-                                            <span class="required"> * </span>
-                                        </label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" name="phone" />
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-4">
+                                        邮箱
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="email" name="email" id="email" />
                                     </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" id="btn_reg" class="btn red">注册</button>
+                                    <button type="button" data-dismiss="modal" class="btn dark btn-outline">取消</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn red">注册</button>
-                    <button type="button" data-dismiss="modal" class="btn dark btn-outline">取消</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
+    <script src="~/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+<script>
+    // 手机号码验证
+    jQuery.validator.addMethod("isMobile", function (value, element) {
+        var length = value.length;
+        var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "请正确填写您的手机号码");
+    var Register = function() {
+
+        var handleRegister = function () {
+            $('#submit_form').validate({
+                errorElement: 'span', //default input error message container
+                errorClass: 'help-block', // default input error message class
+                focusInvalid: false, // do not focus the last invalid input
+                rules: {
+                    phone: {
+                        required: true,
+                        minlength: 11,
+                        isMobile: true
+                    },
+                    password: {
+                        required: true,
+                        rangelength: [6, 12]
+                    },
+                    confirm_password: {
+                        equalTo: "#password"
+                    },
+                    email: {
+                        required: false
+                    }
+                },
+
+                messages: {
+                    phone: {
+                        required: "phone is required.",
+                        minlength: "确认手机不能小于11个字符",
+                        isMobile: "请正确填写您的手机号码"
+                    },
+                    password: {
+                        required: "password is required.",
+                        rangelength: "密码最小长度:6, 最大长度:12。"
+                    },
+                    confirm_password: {
+                        equalTo: "两次密码输入不一致"
+                    },
+                    email: {
+                        required: "email is required."
+                    }
+                },
+
+                invalidHandler: function(event, validator) { //display error alert on form submit
+                    //$('.alert-danger', $('#submit_form')).show();
+                },
+
+                highlight: function(element) { // hightlight error inputs
+                    $(element)
+                        .closest('.form-group').addClass('has-error'); // set error class to the control group
+                },
+
+                success: function(label) {
+                    label.closest('.form-group').removeClass('has-error');
+                    label.remove();
+                },
+
+                errorPlacement: function(error, element) {
+                    error.insertAfter(element.closest('.col-md-6'));
+                },
+
+                submitHandler: function(form) {
+                    $('.alert-info').show();
+                    $('.alert-danger').hide();
+                    $('#btn_reg').attr("disabled", "disabled");
+                    $.post('/Account/Register', {
+                            username : $.trim($("#phone").val()),
+                            password : $.trim($("#password").val()),
+                            email : $.trim($("#email").val())
+                        },
+                        function(data) {
+                            if (data.type == "1") {
+                                window.location = data.value ? data.value : "/Article/Index";
+                            } else {
+                                $('.alert-danger').find("span").text(data.message);
+                                $('.alert-danger').show();
+                                $('#btn_reg').removeAttr("disabled");
+                            }
+                            $('.alert-info').hide();
+                        }, "json");
+                }
+            });
+
+            //$('.login-form input').keypress(function (e) {
+            //    if (e.which == 13) {
+            //        if ($('.login-form').validate().form()) {
+            //            $('.login-form').submit();
+            //        }
+            //        return false;
+            //    }
+            //});
+        }
+
+        return {
+            //main function to initiate the module
+            init: function() {
+                handleRegister();
+            }
+        };
+
+    }();
+
+    $(function() {
+        Register.init();
+    });
+</script>
     <!--[if lt IE 9]>
     <script src="../../assets/global/plugins/respond.min.js"></script>
     <script src="../../assets/global/plugins/excanvas.min.js"></script>

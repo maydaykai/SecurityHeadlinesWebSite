@@ -9,7 +9,7 @@
 #pagelet-nfeedlist .link:hover{color:#5C9BD1 }
 #pagelet-nfeedlist .no-abstract .title{white-space:normal}
 #pagelet-nfeedlist .abstract{font-size:14px;color:#444;line-height:20px;margin-bottom:8px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis;max-height:3em}
-#pagelet-nfeedlist .lbox{position:relative;width:126px;height:82px;border:1px solid #e8e8e8;background:#e8e8e8}
+#pagelet-nfeedlist .lbox{position:relative;width:126px;height:86px;border:1px solid #e8e8e8;background:#e8e8e8}
 #pagelet-nfeedlist .lbox .feedimg{width:100%;height:100%;opacity:0;-webkit-transition-duration:.4s;transition-duration:.4s;-webkit-transition-property:opacity;transition-property:opacity}
 #pagelet-nfeedlist .lbox .ftype{position:absolute;right:4px;bottom:4px;height:22px;min-width:6px;line-height:22px;font-size:12px;color:#fff;background:#000;background:rgba(0,0,0,.5);padding:0 8px;border-radius:11px}
 #pagelet-nfeedlist .lbox .ftype.video span{padding-left:8px}
@@ -20,6 +20,7 @@
 #pagelet-nfeedlist .footer{font-size:12px;color:#999;height:16px;line-height:16px}
 #pagelet-nfeedlist .rfooter{margin-top:1px}
 #pagelet-nfeedlist .lbtn{display:inline-block}
+
 #pagelet-nfeedlist .lbtn.source{text-decoration:none;color:#999}
 #pagelet-nfeedlist .rbtn.share .share-list .icon {width: 28px;height: 28px;margin: 0 3px;vertical-align: middle;}
 .icon.icon-tsina {background-position: 0px 0px;}
@@ -28,4 +29,98 @@
 .mt15{margin-top: 15px;}
 .mb20{margin-bottom: 20px;}
 .blog-single-desc img {max-width:100%;height:auto;}
+#pagelet-channels .news_travel, .fixed-channels .news_travel, #pagelet-channels .news_discovery, .fixed-channels .news_discovery, #pagelet-channels .news_baby, .fixed-channels .news_baby, #pagelet-channels .news_regimen, .fixed-channels .news_regimen, #pagelet-channels .news_story, .fixed-channels .news_story, #pagelet-channels .news_essay, .fixed-channels .news_essay, #pagelet-channels .news_game, .fixed-channels .news_game, #pagelet-channels .news_history, .fixed-channels .news_history, #pagelet-channels .news_food, .fixed-channels .news_food, #pagelet-nfeedlist .unread, #pagelet-nfeedlist .lbox .ftype.video:before, #pagelet-nfeedlist .rfooter .snsbox, #pagelet-nfeedlist .rbtn.digg, #pagelet-nfeedlist .rbtn.digg:hover, #pagelet-nfeedlist .rbtn.bury, #pagelet-nfeedlist .rbtn.bury:hover, #pagelet-nfeedlist .rbtn.share, #pagelet-nfeedlist .rbtn.share .share-list, #pagelet-nfeedlist .rbtn.share:hover, #pagelet-nfeedlist .liked .digg, #pagelet-nfeedlist .liked .digg:hover {
+    background-image: url(../../layouts/layout3/img/newindex_z_1a05532.png);
+}
+#pagelet-nfeedlist .likeGroup_box_like {background-position: -195px -1906px;}
+#pagelet-nfeedlist .likeGroup_box_like {
+    display: none;
+    font-size: 14px;
+    color: #9e9e9e;
+    position: absolute;
+    width: 55px;
+    height: 34px;
+    bottom: 18px;
+    right: 37px;
+    z-index: 2;
+    line-height: 32px;
+    text-align: center;
+    background-repeat: no-repeat;
+}
+#pagelet-nfeedlist .rbtn { float: right; width: 14px; height: 14px; margin-right: 14px;}
+#pagelet-nfeedlist .rbtn.digg{background-position:-236px -1482px}
+#pagelet-nfeedlist .rbtn.digg:hover{background-position:-236px -1526px}
+#pagelet-nfeedlist .rbtn.digg:active{ background-position: -236px -1818px;}
+#pagelet-nfeedlist .rbtn.bury{background-position:-236px -1570px}
+#pagelet-nfeedlist .rbtn.bury:hover{background-position:-236px -1614px}
+#pagelet-nfeedlist .rbtn.bury:active{ background-position: -236px -1862px;}
+#pagelet-nfeedlist .rbtn.share{background-position:-236px -1658px}
+#pagelet-nfeedlist .rbtn.share .share-list{background-position:-124px -1702px}
+#pagelet-nfeedlist .rbtn.share:hover{background-position:-236px -1774px}
 
+#pagelet-nfeedlist .rfooter .snsbox{display:none;z-index:20;width:191px;height:51px;position:absolute;bottom:19px;right:-90px;background-repeat: no-repeat;}
+#pagelet-nfeedlist .rfooter .snsbox .snsbox-inner{display:inline-block;vertical-align:middle;font-size:14px;color:#9e9e9e;width:100%;height:80%;padding:8px 0}
+#pagelet-nfeedlist .rfooter .snsbox .snsbox-inner .snszone{float:right;margin-right:11px}
+#pagelet-nfeedlist .feed_tools:hover .snsbox{display:block}
+#pagelet-nfeedlist .lbtn{display:inline-block}
+#pagelet-nfeedlist .lbtn.source{color:#999}
+#pagelet-nfeedlist .lbtn.comment{color:#999}
+#pagelet-nfeedlist .tag{width:16px;height:16px;text-align:center}
+#pagelet-nfeedlist .tag.tag-hot{background:#ed4040;color:#fff}
+
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin,.snsbox .snsbox-inner .snszone .sns-btn.sns-qzone,.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo,.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray.checked,.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray,.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq,.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray.checked,.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray,.icon.icon-tsina,.icon.icon-tqq,.icon.icon-qzone,.icon.icon-close,.icon:hover.icon-tsina,.icon:hover.icon-tqq,.icon:hover.icon-qzone,.selected .icon.icon-close,.btn:hover .icon.icon-close{background-image: url(../../layouts/layout3/img/nbase_z_3746acc.png)}
+#pagelet-nfeedlist .rfooter .snsbox{display:none;z-index:20;width:191px;height:51px;position:absolute;bottom:12px;right:-74px;background-repeat: no-repeat;}
+#pagelet-nfeedlist .rfooter .snsbox {background-position: -59px -1398px;}
+#pagelet-nfeedlist .rfooter .snsbox .snsbox-inner{display:inline-block;vertical-align:middle;font-size:14px;color:#9e9e9e;width:100%;height:80%;padding:8px 0}
+#pagelet-nfeedlist .rfooter .snsbox .snsbox-inner .snszone{float:right;margin-right:11px}
+#pagelet-nfeedlist .feed_tools:hover .snsbox{display:block}
+.snsbox {height: 30px;font-size: 0; text-align: right;}
+.snsbox .snsbox-inner{display:inline-block;vertical-align:middle;font-size:16px;line-height:30px}
+.snsbox .snsbox-inner .snszone{float:right}
+.snsbox .snsbox-inner .snszone .sns-btn{float:left;display:inline-block;height:30px;width:30px;margin-left:10px;cursor:pointer}
+.snsbox .snsbox-inner .snszone .sns-btn:first-child{margin-left:5px}
+.snsbox .snsbox-inner .snszone .sns-btn:hover{opacity:.7}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin{position:relative;background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin .qrcodeW{display:none;position:absolute;width:120px;height:120px;bottom:45px;left:50%;margin-left:-63px;padding:6px;border-radius:5px;background:url(../../layouts/layout3/img/background-opaque-dark_b917d1b.gif) #fff}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin .qrcodeW .qrcode{width:100px;height:100px;padding:10px;background:#fff}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin:hover{opacity:1}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin:hover .qrcodeW{display:block}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-qzone{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray.checked{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray{background-repeat: no-repeat;}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray.checked{background-repeat: no-repeat;}
+.d-union-1{max-height:80px;margin:40px auto;text-align:center}
+.icon{display:inline-block;*display:inline;*zoom:1}
+.icon.icon-tsina{background-repeat: no-repeat;}
+.icon.icon-tqq{background-repeat: no-repeat;}
+.icon.icon-qzone{background-repeat: no-repeat;}
+.icon.icon-close{background-repeat: no-repeat;}
+.icon:hover.icon-tsina{background-repeat: no-repeat;}
+.icon:hover.icon-tqq{background-repeat: no-repeat;}
+.icon:hover.icon-qzone{background-repeat: no-repeat;}
+.selected .icon.icon-close,.btn:hover .icon.icon-close{background-repeat: no-repeat;}
+.dialog{color:#4E4E4E;background-color:#fff;border-radius:3px;z-index:25}
+.dialog .btn{position:absolute;right:10px;top:13px;display:block;height:18px;width:18px;cursor:pointer}
+.dialog .btn .icon-close{height:8px;width:17px}
+.dialog .dialog-header{padding:9px 15px;border:1px solid #ddd;border-top:2px solid #dc2525;border-radius:3px 3px 0 0;border-bottom:1px solid #ddd}
+.dialog .dialog-header h3{font-size:20px;height:20px;color:#dc2525;padding-left:23px;margin-left:-15px;line-height:20px}
+.dialog .dialog-inner{border:1px solid #ddd;border-top:0;border-radius:0 0 3px 3px;padding-top:15px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weixin{background-position:0px 0px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-qzone{background-position:0px -60px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo{background-position:0px -120px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray.checked{background-position:0px -120px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-weibo.gray{background-position:0px -180px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq{background-position:0px -240px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray.checked{background-position:0px -240px}
+.snsbox .snsbox-inner .snszone .sns-btn.sns-tqq.gray{background-position:0px -300px}
+.icon.icon-tsina{background-position:-2px -360px}
+.icon.icon-tqq{background-position:-2px -418px}
+.icon.icon-qzone{background-position:-2px -476px}
+.icon.icon-close{background-position:-20px -534px}
+.icon:hover.icon-tsina{background-position:-2px -574px}
+.icon:hover.icon-tqq{background-position:-2px -632px}
+.icon:hover.icon-qzone{background-position:-2px -690px}
+.selected .icon.icon-close,.btn:hover .icon.icon-close{background-position:-20px -748px}

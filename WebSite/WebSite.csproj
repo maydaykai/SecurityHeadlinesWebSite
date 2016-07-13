@@ -49,6 +49,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="OpenConnectSDK">
+      <HintPath>..\Lib\OpenConnectSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="QConnectSDK">
+      <HintPath>..\Lib\QConnectSDK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -4020,6 +4026,8 @@
     <Content Include="assets\layouts\layout3\img\logo-default.jpg" />
     <Content Include="assets\layouts\layout3\img\logo-default.png" />
     <Content Include="assets\layouts\layout3\img\menu-toggler.png" />
+    <Content Include="assets\layouts\layout3\img\nbase_z_3746acc.png" />
+    <Content Include="assets\layouts\layout3\img\newindex_z_1a05532.png" />
     <Content Include="assets\layouts\layout3\scripts\demo.js" />
     <Content Include="assets\layouts\layout3\scripts\demo.min.js" />
     <Content Include="assets\layouts\layout3\scripts\layout.js" />

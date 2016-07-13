@@ -13,6 +13,8 @@ using Common;
 using Model;
 using Bll;
 using Newtonsoft.Json;
+using OpenConnectSDK.QQ.Api;
+using QConnectSDK.Context;
 
 namespace WebSite.Controllers
 {
@@ -82,6 +84,33 @@ namespace WebSite.Controllers
 
             return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
         }
+
+        //
+        // Post: /Account/Register
+        [HttpPost]
+        public JsonResult Register(string username, string password, string email)
+        {
+            var userModel = new UserModel
+            {
+                username = username,
+                password = password,
+                email = email
+            };
+            var errorMsg = "";
+            var user = new UserBll().UserReg(userModel, ref errorMsg);
+            if (user.id == null)
+            {
+                return Json(JsonHandler.CreateMessage(0, errorMsg), JsonRequestBehavior.AllowGet);
+            }
+            var account = new UserModel
+            {
+                id = user.id,
+                nickname = user.nickname ?? user.username,
+                username = user.username
+            };
+            Session["Account"] = account;
+            return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult UpdatePassword()
         {
             if (Session["Account"] == null)
@@ -99,6 +128,51 @@ namespace WebSite.Controllers
             }
             var userModel = model.UpdatePassword(user.id, GetUserId(), newPassword);
             return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
+        }
+        /// <summary> 
+        /// QQ登陆页面 
+        /// </summary>
+        [HttpGet]
+        public ActionResult QQLogin(string returnUrl)
+        {
+            this.Session["returnUrl"] = returnUrl;
+            string state = Guid.NewGuid().ToString().Replace("-", "");
+            Session["requeststate"] = state;
+            //var scope = "get_user_info";
+            var authenticationUrl = QQOAuthApi.GetAuthorizeUrl("101334252", "http://www.aftop.cn/", state);
+            return new RedirectResult(authenticationUrl);
+        }
+        /// <summary> 
+        /// 回调页面 
+        /// </summary>
+        public ActionResult QQConnect(LoginModel model)
+        {
+            if (Request.Params["code"] != null)
+            {
+                QOpenClient qzone = null;
+
+                var verifier = Request.Params["code"];
+                var state = Request.Params["state"];
+                string requestState = Session["requeststate"].ToString();
+
+                if (state == requestState)
+                {
+                    qzone = new QOpenClient(verifier, state);
+                    var currentUser = qzone.GetCurrentUser();
+                    if (this.Session["QzoneOauth"] == null)
+                    {
+                        this.Session["QzoneOauth"] = qzone;
+                    }
+                    var friendlyName = currentUser.Nickname;
+
+                    var isPersistentCookie = true;
+                    SetAuthCookie(qzone.OAuthToken.OpenId, isPersistentCookie, friendlyName);
+
+                    return Redirect(Url.Action("Index", "Home"));
+                }
+
+            }
+            return View();
         }
         //
         // POST: /Account/Login
@@ -172,44 +246,7 @@ namespace WebSite.Controllers
                     return View(model);
             }
         }
-
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // 有关如何启用帐户确认和密码重置的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=320771
-                    // 发送包含此链接的电子邮件
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // 如果我们进行到这一步时某个地方出错，则重新显示表单
-            return View(model);
-        }
+        
 
         //
         // GET: /Account/ConfirmEmail

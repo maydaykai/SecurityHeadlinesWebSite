@@ -13,6 +13,7 @@ namespace Model
         public string password { get; set; }
         public string username { get; set; }
         public string nickname { get; set; }
+        public string email { get; set; }
         public DateTime createdAt { get; set; }
     }
 }
