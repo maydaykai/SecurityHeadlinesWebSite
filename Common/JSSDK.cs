@@ -188,7 +188,7 @@ namespace Common
         /// <returns></returns>
         private static JSTicket getJSTicketTicket(string access)
         {
-            string Str = GetJson("https://api.weixin.qq.com/cgi-bin/ticket/getticket?AccessToken_token=" + access + "&type=JSTicket");
+            string Str = GetJson("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access + "&type=jsapi");
             JSTicket jt = JsonConvert.DeserializeObject<JSTicket>(Str);
             return jt;
         }

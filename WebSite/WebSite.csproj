@@ -2585,8 +2585,6 @@
     <Content Include="assets\global\plugins\codemirror\mode\sparql\sparql.js" />
     <Content Include="assets\global\plugins\codemirror\mode\spreadsheet\index.html" />
     <Content Include="assets\global\plugins\codemirror\mode\spreadsheet\spreadsheet.js" />
-    <Content Include="assets\global\plugins\codemirror\mode\sql\index.html" />
-    <Content Include="assets\global\plugins\codemirror\mode\sql\sql.js" />
     <Content Include="assets\global\plugins\codemirror\mode\stex\index.html" />
     <Content Include="assets\global\plugins\codemirror\mode\stex\stex.js" />
     <Content Include="assets\global\plugins\codemirror\mode\stex\test.js" />
@@ -4849,6 +4847,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="assets\apps\img\" />
     <Folder Include="assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
+    <Folder Include="assets\global\plugins\codemirror\mode\sql\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
