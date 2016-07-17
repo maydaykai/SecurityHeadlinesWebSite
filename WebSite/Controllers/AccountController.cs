@@ -14,6 +14,7 @@ using Model;
 using Bll;
 using Newtonsoft.Json;
 using OpenConnectSDK.QQ.Api;
+using QConnectSDK;
 using QConnectSDK.Context;
 
 namespace WebSite.Controllers
@@ -145,35 +146,35 @@ namespace WebSite.Controllers
         /// <summary> 
         /// 回调页面 
         /// </summary>
-        public ActionResult QQConnect(LoginModel model)
-        {
-            if (Request.Params["code"] != null)
-            {
-                QOpenClient qzone = null;
+        //public ActionResult QQConnect(LoginModel model)
+        //{
+        //    if (Request.Params["code"] != null)
+        //    {
+        //        QOpenClient qzone = null;
 
-                var verifier = Request.Params["code"];
-                var state = Request.Params["state"];
-                string requestState = Session["requeststate"].ToString();
+        //        var verifier = Request.Params["code"];
+        //        var state = Request.Params["state"];
+        //        string requestState = Session["requeststate"].ToString();
 
-                if (state == requestState)
-                {
-                    qzone = new QOpenClient(verifier, state);
-                    var currentUser = qzone.GetCurrentUser();
-                    if (this.Session["QzoneOauth"] == null)
-                    {
-                        this.Session["QzoneOauth"] = qzone;
-                    }
-                    var friendlyName = currentUser.Nickname;
+        //        if (state == requestState)
+        //        {
+        //            qzone = new QOpenClient(verifier, state);
+        //            var currentUser = qzone.GetCurrentUser();
+        //            if (this.Session["QzoneOauth"] == null)
+        //            {
+        //                this.Session["QzoneOauth"] = qzone;
+        //            }
+        //            var friendlyName = currentUser.Nickname;
 
-                    var isPersistentCookie = true;
-                    SetAuthCookie(qzone.OAuthToken.OpenId, isPersistentCookie, friendlyName);
+        //            var isPersistentCookie = true;
+        //            SetAuthCookie(qzone.OAuthToken.OpenId, isPersistentCookie, friendlyName);
 
-                    return Redirect(Url.Action("Index", "Home"));
-                }
+        //            return Redirect(Url.Action("Index", "Home"));
+        //        }
 
-            }
-            return View();
-        }
+        //    }
+        //    return View();
+        //}
         //
         // POST: /Account/Login
         //[HttpPost]

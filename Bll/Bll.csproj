@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArticleBll.cs" />
+    <Compile Include="BannerBll.cs" />
     <Compile Include="ChannelBll.cs" />
     <Compile Include="CommentBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

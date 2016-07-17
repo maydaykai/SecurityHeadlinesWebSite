@@ -61,8 +61,7 @@ namespace Common
 
 
             // 这里参数的顺序要按照 key 值 ASCII 码升序排序  
-            string rawstring = "JSTicket_ticket=" + JSTicketTicket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + url + "";
-
+            string rawstring = "jsapi_ticket=" + JSTicketTicket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + url + "";
             string signature = FormsAuthentication.HashPasswordForStoringInConfigFile(rawstring, "SHA1").ToLower();
             //string signature = SHA1_Hash(rawstring);
             Hashtable signPackage = new Hashtable();
@@ -188,7 +187,6 @@ namespace Common
         /// <returns></returns>
         private static JSTicket getJSTicketTicket(string access)
         {
-            string Str = GetJson("https://api.weixin.qq.com/cgi-bin/ticket/getticket?AccessToken_token=" + access + "&type=JSTicket");
             JSTicket jt = JsonConvert.DeserializeObject<JSTicket>(Str);
             return jt;
         }

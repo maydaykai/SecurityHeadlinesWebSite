@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArticleModel.cs" />
+    <Compile Include="BannerModel.cs" />
     <Compile Include="ChannelModel.cs" />
     <Compile Include="CommentModel.cs" />
     <Compile Include="PagerModel.cs" />

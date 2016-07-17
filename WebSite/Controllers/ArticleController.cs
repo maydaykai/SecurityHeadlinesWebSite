@@ -56,6 +56,16 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetBannerList()
+        {
+            var totalRows = 0;
+            var list = new BannerBll().GetBannerModelList("Status=1", "UpdateTime DESC", 1, 100, ref totalRows);
+            var json = new
+            {
+                list
+            };
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetUserArticleList(string id, int page)
         {
             var list = new UserArticleBll().GetList(id, page);
