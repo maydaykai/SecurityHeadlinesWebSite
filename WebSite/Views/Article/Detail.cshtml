@@ -26,7 +26,10 @@
                         <h1 class="blog-single-head-title">@Html.DisplayFor(model => model.title)</h1>
                         <div class="blog-single-head-date">
                             <div class="left lfooter mb20">
-                                <span class="lbtn comment"></span>
+                                <span class="lbtn comment">@if (!string.IsNullOrEmpty(Model.source))
+                                {
+                                    <span>来源：</span>@Model.source
+                                                           }</span><br />
                                 <span class="lbtn comment"></span>
                                 <span class="lbtn time" data-publishtime="1458871218">@{string pubTime = Model.pubTime.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
                             </div>

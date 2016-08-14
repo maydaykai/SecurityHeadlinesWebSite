@@ -23,6 +23,13 @@ namespace Bll
             var data = model.Get(id);
             return JsonConvert.DeserializeObject<UserModel>(data);
         }
+        public UserModel GetUserModelByName(string name)
+        {
+            var model = DataConstructor.Factory("user");
+            var where = "{ \"where\":{ \"username\":\"" + name + "\"}}";
+            var data = model.FindOne(where);
+            return JsonConvert.DeserializeObject<UserModel>(data);
+        }
         public UserModel UserLogin(string userName, string password)
         {
             var model = DataConstructor.Factory("user");
@@ -34,10 +41,23 @@ namespace Bll
             var model = DataConstructor.Factory("user");
             var data = model.Create(new
             {
-                username = userModel.username,
-                password = userModel.password,
+                userModel.username,
+                userModel.password,
                 mobile = userModel.username,
-                email = userModel.email
+                userModel.email
+            });
+            errorMsg = data;
+            return JsonConvert.DeserializeObject<UserModel>(data);
+        }
+        public UserModel UserQQReg(UserModel userModel, ref string errorMsg)
+        {
+            var model = DataConstructor.Factory("user");
+            var data = model.Create(new
+            {
+                userModel.username,
+                userModel.password,
+                userModel.nickname,
+                userModel.email
             });
             errorMsg = data;
             return JsonConvert.DeserializeObject<UserModel>(data);

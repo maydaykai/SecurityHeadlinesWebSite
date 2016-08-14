@@ -84,15 +84,12 @@ namespace WebSite.Controllers
                 var jsonEmpty = new { total = 0, list = new string[] {}};
                 return Json(jsonEmpty, JsonRequestBehavior.AllowGet);
             }
-
-            var userList = new UserBll().GetAllList();
+            
             foreach (var item in list)
             {
                 if (IsNumAndEnCh(item.username)) continue;
-                foreach (var user in userList.Where(user => item.username.Equals(user.username)))
-                {
-                    item.username = user.nickname;
-                }
+                var user = new UserBll().GetUserModelByName(item.username);
+                item.username = user.nickname;
             }
 
 
@@ -147,7 +144,7 @@ namespace WebSite.Controllers
         /// <returns></returns>  
         public static bool IsNumAndEnCh(string input)
         {
-            var pattern = @"^[0-9]+$";
+            var pattern = @"^1[3|4|5|7|8]\d{9}$";
             var regex = new Regex(pattern);
             return regex.IsMatch(input);
         }

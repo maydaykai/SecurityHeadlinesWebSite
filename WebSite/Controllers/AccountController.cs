@@ -14,8 +14,6 @@ using Model;
 using Bll;
 using Newtonsoft.Json;
 using OpenConnectSDK.QQ.Api;
-using QConnectSDK;
-using QConnectSDK.Context;
 
 namespace WebSite.Controllers
 {
@@ -130,52 +128,74 @@ namespace WebSite.Controllers
             var userModel = model.UpdatePassword(user.id, GetUserId(), newPassword);
             return Json(JsonHandler.CreateMessage(1, "", Session["returnUrl"]?.ToString()), JsonRequestBehavior.AllowGet);
         }
+
+        private string appid = "101334252";
+        private string appkey = "e159f7584a9c48c8e245c90595eb6758";
+        private string redirectUrl = "http://www.aftop.cn/Account/QQConnect";
         /// <summary> 
         /// QQ登陆页面 
         /// </summary>
         [HttpGet]
-        public ActionResult QQLogin(string returnUrl)
+        public ActionResult QQLogin()
         {
-            this.Session["returnUrl"] = returnUrl;
             string state = Guid.NewGuid().ToString().Replace("-", "");
             Session["requeststate"] = state;
             //var scope = "get_user_info";
-            var authenticationUrl = QQOAuthApi.GetAuthorizeUrl("101334252", "http://www.aftop.cn/", state);
+            var authenticationUrl = QQOAuthApi.GetAuthorizeUrl(appid, redirectUrl, state);
             return new RedirectResult(authenticationUrl);
         }
         /// <summary> 
         /// 回调页面 
         /// </summary>
-        //public ActionResult QQConnect(LoginModel model)
-        //{
-        //    if (Request.Params["code"] != null)
-        //    {
-        //        QOpenClient qzone = null;
+        public RedirectToRouteResult QQConnect()
+        {
+            if (Request.Params["code"] != null)
+            {
+                var verifier = Request.Params["code"];
+                var token = QQOAuthApi.GetAccessToken(appid, appkey, redirectUrl, verifier);
+                if (!string.IsNullOrEmpty(token.AccessToken))
+                {
+                    var openID = QQOAuthApi.GetOpenID(token.AccessToken);
+                    var user = new UserBll().GetUserModelByName(openID);
+                    if (user != null) //已注册
+                    {
+                        var account = new UserModel
+                        {
+                            id = user.id,
+                            nickname = user.nickname ?? user.username,
+                            username = user.username
+                        };
+                        Session["Account"] = account;
+                    }
+                    else
+                    {
+                        var userInfo = QQUserApi.GetUserInfo(appid, token.AccessToken, openID);
+                        var userModel = new UserModel
+                        {
+                            username = openID,
+                            password = openID,
+                            email = "",
+                            nickname = userInfo.NickName
+                        };
+                        var errorMsg = "";
+                        var userReg = new UserBll().UserQQReg(userModel, ref errorMsg);
+                        if (userReg.id != null)
+                        {
+                            var account = new UserModel
+                            {
+                                id = userReg.id,
+                                nickname = userReg.nickname ?? userReg.username,
+                                username = userReg.username
+                            };
+                            Session["Account"] = account;
+                        }
+                    }
+                }
 
-        //        var verifier = Request.Params["code"];
-        //        var state = Request.Params["state"];
-        //        string requestState = Session["requeststate"].ToString();
+            }
+            return RedirectToAction("List","Article", new { id = 100 });
+        }
 
-        //        if (state == requestState)
-        //        {
-        //            qzone = new QOpenClient(verifier, state);
-        //            var currentUser = qzone.GetCurrentUser();
-        //            if (this.Session["QzoneOauth"] == null)
-        //            {
-        //                this.Session["QzoneOauth"] = qzone;
-        //            }
-        //            var friendlyName = currentUser.Nickname;
-
-        //            var isPersistentCookie = true;
-        //            SetAuthCookie(qzone.OAuthToken.OpenId, isPersistentCookie, friendlyName);
-
-        //            return Redirect(Url.Action("Index", "Home"));
-        //        }
-
-        //    }
-        //    return View();
-        //}
-        //
         // POST: /Account/Login
         //[HttpPost]
         //[AllowAnonymous]
