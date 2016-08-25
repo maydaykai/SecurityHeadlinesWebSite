@@ -57,6 +57,14 @@ namespace Model
             set;
         }
         /// <summary>
+        /// 类型：0-右侧滑动图片 1-中间长条广告 2-右侧第一个广告 3-右侧第二个广告
+        /// </summary>		
+        public int Type
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 创建时间
         /// </summary>		
         public DateTime CreateTime

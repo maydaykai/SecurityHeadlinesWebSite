@@ -38,7 +38,8 @@ namespace Bll
                               select new BannerModel
                               {
                                   Url = item["Url"].ToString(),
-                                  LargePicture = item["LargePicture"].ToString()
+                                  LargePicture = item["LargePicture"].ToString(),
+                                  Type = Convert.ToInt32(item["Type"].ToString())
                               });
             }
             return list;

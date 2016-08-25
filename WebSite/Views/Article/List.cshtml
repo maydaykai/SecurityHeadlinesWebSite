@@ -6,20 +6,20 @@
 }
 <style>
     #wrapper {
-      top: 49px;
-      bottom: 0;
-      overflow: hidden;
-      margin: 0;
-      width: 100%;
-      padding: 0 8px;
-      background-color: #f8f8f8;
+        top: 49px;
+        bottom: 0;
+        overflow: hidden;
+        margin: 0;
+        width: 100%;
+        padding: 0 8px;
+        background-color: #f8f8f8;
     }
-     .pull-action {
-         text-align: center;
-         height: 45px;
-         line-height: 45px;
-         color: #999;
-     }
+    .pull-action {
+        text-align: center;
+        height: 45px;
+        line-height: 45px;
+        color: #999;
+    }
 
     .pull-action .am-icon-spin {
         display: none;
@@ -33,6 +33,7 @@
         display: none;
     }
 </style>
+<div><img id="advert-middle" src="" style="cursor: pointer;"></div>
 <!-- BEGIN PAGE CONTENT INNER -->
 <div class="page-content-inner">
     <div class="row mt15">
@@ -56,6 +57,16 @@
         <div class="col-md-3 col-sm-3">
             <div class="portlet light" id="banner">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                </div>
+            </div>
+            <div class="">
+                <div class="carousel slide" data-ride="carousel">
+                    <img id="advert-right-first" src="" style="cursor: pointer;">
+                </div>
+            </div>
+            <div class="">
+                <div class="carousel slide" data-ride="carousel">
+                    <img id="advert-right-second" src=""style="cursor: pointer;">
                 </div>
             </div>
         </div>
@@ -269,6 +280,42 @@
                 this.renderList();
             };
         };
+        var Advert = function () {
+            this.getURL = function () {
+                return '@Url.Action("GetAdvertList", "Article")';
+            };
+            this.renderList = function (start, type) {
+                $.getJSON(this.URL).then(function (data) {
+                    console.log(data);
+                    var urlPre = "http://www.aftop.cn:8088/img/";
+                    $.each(data.list,function(i, e) {
+                        if (e.Type === 1) {
+                            $("#advert-middle").attr("src", urlPre + e.LargePicture).click(function () {
+                                window.open(e.Url,"_blank");
+                            })
+                        }
+                        if (e.Type === 2) {
+                            $("#advert-right-first").attr("src", urlPre + e.LargePicture).click(function() {
+                                window.open(e.Url, "_blank");
+                            }).parent().parent().addClass("portlet light");
+                        }
+                        if (e.Type === 2) {
+                            $("#advert-right-second").attr("src", urlPre + e.LargePicture).click(function () {
+                                window.open(e.Url, "_blank");
+                            }).parent().parent().addClass("portlet light");
+                        }
+                    });
+                }, function () {
+                    console.log('Error...');
+                }).always(function () {
+                });
+            };
+
+            this.init = function () {
+                this.URL = this.getURL();
+                this.renderList();
+            };
+        };
         $(function() {
             var app = new EventsList(null, {
                 api: '@Url.Action("GetList", "Article")/@id',
@@ -281,6 +328,8 @@
             app.init();
             var banner = new Banner();
             banner.init();
+            var advert = new Advert();
+            advert.init();
         });
     })(window.jQuery);
 </script>
