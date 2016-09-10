@@ -33,7 +33,9 @@
         display: none;
     }
 </style>
-<div><img id="advert-middle" src="" style="cursor: pointer;"></div>
+@*<div><img id="advert-middle" src="" style="cursor: pointer;">
+</div>*@
+<div id="advert-middle"></div>
 <!-- BEGIN PAGE CONTENT INNER -->
 <div class="page-content-inner">
     <div class="row mt15">
@@ -210,6 +212,11 @@
                     }
                 }
                 queries.push('page=');
+                var title = this.GetQueryString("title");
+                if (title != null) {
+                    $("#txtSearch").val(decodeURI(title));
+                    return options.api + '?title=' + title + "&" + queries.join('&');
+                }
                 return options.api + '?' + queries.join('&');
             };
 
@@ -254,6 +261,12 @@
                     }
                 });
             };
+
+            this.GetQueryString = function (name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return (r[2]); return null;
+            }
         };
         var Banner = function () {
             var $main = $('#banner');
@@ -290,9 +303,11 @@
                     var urlPre = "http://www.aftop.cn:8088/img/";
                     $.each(data.list,function(i, e) {
                         if (e.Type === 1) {
-                            $("#advert-middle").attr("src", urlPre + e.LargePicture).click(function () {
-                                window.open(e.Url,"_blank");
-                            })
+                            //$("#advert-middle").attr("src", urlPre + e.LargePicture).click(function () {
+                            //    window.open(e.Url,"_blank");
+                            //})
+                            this.html = TopAd(e.Url, urlPre + e.SmallPicture, urlPre + e.LargePicture);
+                            $("#advert-middle").html(this.html);
                         }
                         if (e.Type === 2) {
                             $("#advert-right-first").attr("src", urlPre + e.LargePicture).click(function() {
@@ -316,6 +331,33 @@
                 this.renderList();
             };
         };
+
+        var TopAd = function (src, smallImg, bigImg) {
+            var strTopAd;
+
+            //定义小图片内容
+            var topSmallBanner = "<div><a href=\"" + src + "\" target=_blank><img src=\"" + smallImg + "\" /></a></div>";
+
+            //判断在那些页面上显示大图变小图效果，非这些地址只显示小图（或FLASH）
+            if (true) {
+                //定义大图内容
+                strTopAd = "<div id=adimage style=\"width:980px\">" +
+                    "<div id=adBig><a href=\"" + src + "\" " +
+                    "target=_blank><img " +
+                    "src=\"" + bigImg + "\" " +
+                    "border=0></a></div>" +
+                    "<div id=adSmall style=\"display: none\">";
+                strTopAd += topSmallBanner;
+                strTopAd += "</div></div>";
+            } else {
+                strTopAd += topSmallBanner;
+            }
+            strTopAd += "<div style=\"height:7px; clear:both;overflow:hidden\"></div>";
+            return strTopAd;
+        };
+        var showImage = function () {
+            $("#adBig").slideUp(1000, function () { $("#adSmall").slideDown(1000); });
+        }
         $(function() {
             var app = new EventsList(null, {
                 api: '@Url.Action("GetList", "Article")/@id',
@@ -330,6 +372,7 @@
             banner.init();
             var advert = new Advert();
             advert.init();
+            setTimeout(function() { showImage(); }, 2000);
         });
     })(window.jQuery);
 </script>

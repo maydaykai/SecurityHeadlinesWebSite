@@ -107,9 +107,9 @@
                 <!-- BEGIN HEADER SEARCH BOX -->
                 <form class="search-form">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="query">
+                        <input type="text" id="txtSearch" class="form-control" placeholder="Search" name="title">
                         <span class="input-group-btn">
-                            <a href="javascript:;" class="btn submit">
+                            <a id="btnSearch" href="javascript:;" class="btn submit">
                                 <i class="icon-magnifier"></i>
                             </a>
                         </span>
@@ -340,11 +340,18 @@
             //    }
             //});
         }
-
+        var event = function () {
+            $("#btnSearch").click(function () {
+                var txtSearch = $.trim($("#txtSearch").val());
+                if (txtSearch == "") return;
+                window.location.href = window.location.pathname + "?title=" + txtSearch;
+            });
+        }
         return {
             //main function to initiate the module
             init: function() {
                 handleRegister();
+                event();
             }
         };
 

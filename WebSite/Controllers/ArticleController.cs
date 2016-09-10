@@ -36,7 +36,7 @@ namespace WebSite.Controllers
             ViewData["Id"] = id;
             return View();
         }
-        public JsonResult GetList(string id, int page)
+        public JsonResult GetList(string id, int page, string title="")
         {
             var pager = new PagerModel
             {
@@ -48,6 +48,8 @@ namespace WebSite.Controllers
             var queryStr = "ChannelID='" + id + "'";
             if ("100".Equals(id))
                 queryStr = "IsHot=1";
+            if (!string.IsNullOrEmpty(title))
+                queryStr = "Title LIKE '%" + title + "%'";
             var list = new ArticleBll().GetArticleModelList(ref pager, queryStr);
             var json = new
             {
@@ -59,7 +61,7 @@ namespace WebSite.Controllers
         public JsonResult GetBannerList()
         {
             var totalRows = 0;
-            var list = new BannerBll().GetBannerModelList("Status=1", "UpdateTime DESC", 1, 100, ref totalRows);
+            var list = new BannerBll().GetBannerModelList("Status=1 AND Type=0", "UpdateTime DESC", 1, 100, ref totalRows);
             var json = new
             {
                 list

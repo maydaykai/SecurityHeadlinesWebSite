@@ -39,6 +39,7 @@ namespace Bll
                               {
                                   Url = item["Url"].ToString(),
                                   LargePicture = item["LargePicture"].ToString(),
+                                  SmallPicture = item["SmallPicture"].ToString(),
                                   Type = Convert.ToInt32(item["Type"].ToString())
                               });
             }
