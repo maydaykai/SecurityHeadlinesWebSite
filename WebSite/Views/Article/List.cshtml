@@ -12,8 +12,9 @@
         margin: 0;
         width: 100%;
         padding: 0 8px;
-        background-color: #f8f8f8;
+        background-color: #fff;
     }
+
     .pull-action {
         text-align: center;
         height: 45px;
@@ -21,31 +22,59 @@
         color: #999;
     }
 
-    .pull-action .am-icon-spin {
-        display: none;
+        .pull-action .am-icon-spin {
+            display: none;
+        }
+
+        .pull-action.loading .am-icon-spin {
+            display: block;
+        }
+
+        .pull-action.loading .pull-label {
+            display: none;
+        }
+
+    .left > a > img {
+        transition: .1s transform;
+        transform: translateZ(0);
+        /* hack */
     }
 
-    .pull-action.loading .am-icon-spin {
-        display: block;
+    .left > a:hover {
+        z-index: 10000;
     }
 
-    .pull-action.loading .pull-label {
-        display: none;
+        .left > a:hover > img {
+            transform: scale(1.1, 1.1);
+            transition: .3s transform;
+        }
+
+    .portlet {
+        box-shadow: none;
+    }
+
+    .carousel-inner img,.carousel img{
+        width: 100%;
+        height: auto;
+    }
+
+    .pull-action span {
+        cursor: pointer;
     }
 </style>
 @*<div><img id="advert-middle" src="" style="cursor: pointer;">
-</div>*@
+    </div>*@
 <div id="advert-middle"></div>
 <!-- BEGIN PAGE CONTENT INNER -->
 <div class="page-content-inner">
     <div class="row mt15">
-        <div class="col-md-9 col-sm-9">
-            <div class="portlet light" id="wrapper">
+        <div class="col-md-8 col-sm-8">
+            <div class="portlet" id="wrapper">
                 @*<div class="pull-action loading" id="pull-down">
-                    <span class="am-icon-arrow-down pull-label"
-                          id="pull-down-label">下拉刷新</span>
-                    <span class="am-icon-spinner am-icon-spin"></span>
-                </div>*@
+                        <span class="am-icon-arrow-down pull-label"
+                              id="pull-down-label">下拉刷新</span>
+                        <span class="am-icon-spinner am-icon-spin"></span>
+                    </div>*@
                 <div class="portlet-body" id="pagelet-nfeedlist">
 
                 </div>
@@ -56,8 +85,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-3">
-            <div class="portlet light" id="banner">
+        <div class="col-md-4 col-sm-4">
+            <div class="portlet" id="banner">
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 </div>
             </div>
@@ -68,7 +97,7 @@
             </div>
             <div class="">
                 <div class="carousel slide" data-ride="carousel">
-                    <img id="advert-right-second" src=""style="cursor: pointer;">
+                    <img id="advert-right-second" src="" style="cursor: pointer;">
                 </div>
             </div>
         </div>
@@ -84,7 +113,7 @@
     {{#each this}}
     <div class="item-inner">
         {{#imgLengthHelper imgs}}
-        <div class="rbox" style="margin-left:20px;">
+        <div class="rbox" style="margin-left:0px;">
             {{else}}
             <div class="lbox left">
                 <a ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
@@ -128,23 +157,23 @@
                 </div>
             </div>
         </div>
-    {{/each}}
+        {{/each}}
 </script>
 <script type="text/x-handlebars-template" id="banner-list">
     <!-- Indicators -->
-    <ol class="carousel-indicators">        
+    <ol class="carousel-indicators">
         {{#each this}}
-        <li data-target="#carousel-example-generic" data-slide-to="{{@@index}}" {{#if @@first}}class="active"{{/if}}></li>   
+        <li data-target="#carousel-example-generic" data-slide-to="{{@@index}}" {{#if @@first}} class="active" {{/if}}></li>
         {{/each}}
-    </ol>    
+    </ol>
     <!-- Wrapper for slides -->
-    <div class="carousel-inner" role="listbox">        
+    <div class="carousel-inner" role="listbox">
         {{#each this}}
         <div class="item{{#if @@first}} active{{/if}}">
             <img src="http://www.aftop.cn:8088/img/{{LargePicture}}">
             <div class="carousel-caption">
             </div>
-        </div>   
+        </div>
         {{/each}}
     </div>
     <!-- Controls -->
@@ -318,12 +347,12 @@
                         if (e.Type === 2) {
                             $("#advert-right-first").attr("src", urlPre + e.LargePicture).click(function() {
                                 window.open(e.Url, "_blank");
-                            }).parent().parent().addClass("portlet light");
+                            }).parent().parent().addClass("portlet");
                         }
                         if (e.Type === 3) {
                             $("#advert-right-second").attr("src", urlPre + e.LargePicture).click(function () {
                                 window.open(e.Url, "_blank");
-                            }).parent().parent().addClass("portlet light");
+                            }).parent().parent().addClass("portlet");
                         }
                     });
                 }, function () {
@@ -347,7 +376,7 @@
             //判断在那些页面上显示大图变小图效果，非这些地址只显示小图（或FLASH）
             if (true) {
                 //定义大图内容
-                strTopAd = "<div id=adimage style=\"width:980px\">" +
+                strTopAd = "<div id=adimage style=\"width:100%\">" +
                     "<div id=adBig><a href=\"" + src + "\" " +
                     "target=_blank><img " +
                     "src=\"" + bigImg + "\" " +

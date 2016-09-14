@@ -45,11 +45,11 @@ namespace WebSite.Controllers
                 order = "ID",
                 sort = "DESC"
             };
-            var queryStr = "ChannelID='" + id + "'";
+            var queryStr = "[Status] = 3 AND ChannelID='" + id + "'";
             if ("100".Equals(id))
-                queryStr = "IsHot=1";
+                queryStr = "[Status] = 3 AND IsHot=1";
             if (!string.IsNullOrEmpty(title))
-                queryStr = "Title LIKE '%" + title + "%'";
+                queryStr = "[Status] = 3 AND Title LIKE '%" + title + "%'";
             var list = new ArticleBll().GetArticleModelList(ref pager, queryStr);
             var json = new
             {

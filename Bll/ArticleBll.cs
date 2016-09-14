@@ -44,7 +44,16 @@ namespace Bll
                 list.AddRange(from DataRow item in dt.Rows
                     select new ArticleModel
                     {
-                        id = item["oid"].ToString(), title = item["title"].ToString(), content = HtmlHelper.DeleteHtml(HttpContext.Current.Server.HtmlDecode(item["Content"].ToString())).GetSubString(0, 86), source = item["source"]?.ToString(), pubTime = DateTime.Parse(item["pubTime"].ToString()), imgs = item["imgs"]?.ToString(), commentCount = new CommentBll().GetCount(item["oid"].ToString())
+                        id = item["oid"].ToString(),
+                        title = item["title"].ToString(),
+                        content =
+                            HtmlHelper.DeleteHtml(HttpContext.Current.Server.HtmlDecode(item["Content"].ToString()))
+                                .GetSubString(0, 86),
+                        source = item["source"]?.ToString(),
+                        pubTime = DateTime.Parse(item["pubTime"].ToString()),
+                        imgs = item["imgs"]?.ToString(),
+                        type = item["Type"]?.ToString(),
+                        commentCount = new CommentBll().GetCount(item["oid"].ToString())
                     });
             }
             return list;
