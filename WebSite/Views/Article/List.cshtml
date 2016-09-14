@@ -83,52 +83,51 @@
 <script type="text/x-handlebars-template" id="tpi-list-item">
     {{#each this}}
     <div class="item-inner">
-        <div class="lbox left">
-            <a ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
-                <img class="feedimg" src="{{imgHelper imgs}}" onload="this.style.opacity = 1;" style="opacity: 1;">
-            </a>
-        </div>
-        <div class="rbox">
-            <div class="rbox-inner">
-                <div class="title-box">
-                    <a ga_event="click_feed_newstitle" class="link title" href="@Url.Action("Detail", "Article")/{{id}}" data-node="title">
-                        {{title}}
-                    </a>
-                </div>
-                <div class="abstract">
-                    <a ga_event="click_feed_newsabstract" class="link" href="@Url.Action("Detail", "Article")/{{id}}">{{content}}</a>
-                </div>
-                <div class="footer">
-                    <div class="left lfooter">
-                        <span class="lbtn comment">{{source}}&nbsp;⋅</span>
-    <span class="lbtn comment">{{commentCount}}评论&nbsp;⋅</span>
-    <span class="lbtn time">{{dateHelper pubTime}}</span>
-                    </div>
-                    @*<div class="right rfooter">
-                        <a class="feed_tools share rbtn" href="javascript:;" data-node="feed_share">
-                            <div class="snsbox">
-                                <div class="snsbox-inner">
-                                    <span>分享到：</span>
-                                    <div class="snszone" data-url="http://aftop.cn" data-text="新闻标题" data-desc="来自头条 http://aftop.cn" data-pic="" data-node="share">
-                                        <i class="sns-btn sns-weixin" ga_event="click_share_interactive" ga_label="weixin" data-type="" title="分享到微信">
-                                        </i>
-                                        <i class="sns-btn sns-qzone" ga_event="click_share_interactive" ga_label="qzone" data-type="qzone" title="分享到QQ空间"></i>
-                                        <i class="sns-btn sns-weibo" ga_event="click_share_interactive" ga_label="tsina" data-type="tsina" title="分享到新浪微博"></i>
-                                    </div>
-                                </div>
-                            </div>
+        {{#imgLengthHelper imgs}}
+        <div class="rbox" style="margin-left:20px;">
+            {{else}}
+            <div class="lbox left">
+                <a ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
+                    <img class="feedimg" src="{{imgHelper imgs}}" onload="this.style.opacity = 1;" style="opacity: 1;">
+                </a>
+            </div>
+            <div class="rbox">
+                {{/imgLengthHelper}}
+                <div class="rbox-inner">
+                    <div class="title-box">
+                        <a ga_event="click_feed_newstitle" class="link title" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank" data-node="title">
+                            {{title}}
                         </a>
-                        <span data-node="likeGroup" class="">
-                            <a class="rbtn bury" href="javascript:;" title="不喜欢" data-node="close">
+                    </div>
+                    {{#imgLengthHelper imgs}}
+                    <div class="abstract" style="max-height:86px;">
+                        <div class="left" style="width: 100%;position: relative;">
+                            <a class="left" style="margin-right: 20px;" ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
+                                <img class="feedimg" src="{{imgHelper imgs 0}}" onload="this.style.opacity=1;" style="opacity: 1;height:120px;">
                             </a>
-                            <a class="rbtn digg" href="javascript:;" title="喜欢" data-node="digg">
+                            <a class="left" style="margin-right: 20px;" ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
+                                <img class="feedimg" src="{{imgHelper imgs 1}}" onload="this.style.opacity=1;" style="opacity: 1;height:120px;">
                             </a>
-                        </span>
-                    </div>*@
+                            <a class="left" style="margin-right: 20px;" ga_event="click_feed_newsimg" href="@Url.Action("Detail", "Article")/{{id}}" target="_blank">
+                                <img class="feedimg" src="{{imgHelper imgs 2}}" onload="this.style.opacity=1;" style="opacity: 1;height:120px;">
+                            </a>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="abstract">
+                        <a ga_event="click_feed_newsabstract" class="link" href="@Url.Action("Detail", "Article")/{{id}}">{{content}}</a>
+                    </div>
+                    {{/imgLengthHelper}}
+                    <div class="footer">
+                        <div class="left lfooter">
+                            <span class="lbtn comment">{{source}}&nbsp;⋅</span>
+                            <span class="lbtn comment">{{commentCount}}评论&nbsp;⋅</span>
+                            <span class="lbtn time">{{dateHelper pubTime}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     {{/each}}
 </script>
 <script type="text/x-handlebars-template" id="banner-list">
@@ -169,11 +168,18 @@
             //var topOffset = -$pullDown.outerHeight();
 
             this.compiler = Handlebars.compile($('#tpi-list-item').html());
-            Handlebars.registerHelper("imgHelper", function (value) {
+            Handlebars.registerHelper("imgHelper", function(value, num) {
                 if (!value)
                     return "";
                 var imgs = value.split(',');
-                return imgs[0];
+                if (!(num === +num)) num = 0;
+                return imgs[num];
+            });
+            Handlebars.registerHelper("imgLengthHelper", function (value, options) {
+                if (!value)
+                    return options.inverse(this);
+                var imgs = value.split(',');
+                return imgs.length > 2 ? options.fn(this) : options.inverse(this);
             });
             Handlebars.registerHelper("dateHelper", function (value) {
                 var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
