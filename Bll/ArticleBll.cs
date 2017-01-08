@@ -63,5 +63,34 @@ namespace Bll
             var resultData = _factory.Get(id);
             return JsonConvert.DeserializeObject<ArticleModel>(resultData);
         }
+        /// <summary>
+        /// 获取相关资讯
+        /// </summary>
+        /// <param name="id">文章id</param>
+        /// <returns></returns>
+        public List<ArticleModel> Related(string id)
+        {
+            var list = new List<ArticleModel>();
+            var totalRows = 0;
+            var queryStr = "ChannelID = (SELECT ChannelID FROM dbo.Article WHERE OID='" + id + "') AND OID <> '" + id + "'";
+            var dt = GetList(queryStr, "pubTime desc", 1, 4, ref totalRows);
+            if (dt != null)
+            {
+                list.AddRange(from DataRow item in dt.Rows
+                              select new ArticleModel
+                              {
+                                  id = item["oid"].ToString(),
+                                  title = item["title"].ToString(),
+                                  content =
+                                      HtmlHelper.DeleteHtml(HttpContext.Current.Server.HtmlDecode(item["Content"].ToString()))
+                                          .GetSubString(0, 86),
+                                  source = item["source"]?.ToString(),
+                                  pubTime = DateTime.Parse(item["pubTime"].ToString()),
+                                  imgs = item["imgs"]?.ToString(),
+                                  type = item["Type"]?.ToString()
+                              });
+            }
+            return list;
+        }
     }
 }

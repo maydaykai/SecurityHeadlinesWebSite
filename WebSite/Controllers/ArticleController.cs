@@ -12,16 +12,30 @@ namespace WebSite.Controllers
 {
     public class ArticleController : BaseController
     {
+        /// <summary>
+        /// 跳转到推荐栏目视图
+        /// </summary>
+        /// <returns></returns>
         public RedirectToRouteResult Index()
         {
             return RedirectToAction("List", new {id = 100});
         }
+        /// <summary>
+        /// 资讯列表视图
+        /// </summary>
+        /// <param name="id">频道id</param>
+        /// <returns></returns>
         public ActionResult List(string id)
         {
             ViewData["Id"] = id;
             ViewData["ChannelId"] = id;
             return View();
         }
+        /// <summary>
+        /// 用户文章列表视图
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult UserArticleList(string id)
         {
             if (Session["Account"] == null)
@@ -29,6 +43,11 @@ namespace WebSite.Controllers
             ViewData["Id"] = id;
             return View();
         }
+        /// <summary>
+        /// 添加用户文章视图
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Add(string id)
         {
             if (Session["Account"] == null)
@@ -36,6 +55,13 @@ namespace WebSite.Controllers
             ViewData["Id"] = id;
             return View();
         }
+        /// <summary>
+        /// 获取资讯列表
+        /// </summary>
+        /// <param name="id">频道id</param>
+        /// <param name="page">当前页</param>
+        /// <param name="title">查询标题</param>
+        /// <returns></returns>
         public JsonResult GetList(string id, int page, string title="")
         {
             var pager = new PagerModel
@@ -58,6 +84,10 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 获取列表页面上面大图
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetBannerList()
         {
             var totalRows = 0;
@@ -68,6 +98,10 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 获取右下小图
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAdvertList()
         {
             var totalRows = 0;
@@ -78,6 +112,12 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 获取用户文章列表
+        /// </summary>
+        /// <param name="id">用户id</param>
+        /// <param name="page">当前页</param>
+        /// <returns></returns>
         public JsonResult GetUserArticleList(string id, int page)
         {
             var list = new UserArticleBll().GetList(id, page);
@@ -88,15 +128,21 @@ namespace WebSite.Controllers
             };
             return Json(json, JsonRequestBehavior.AllowGet);
         }
+
+        /// <summary>
+        /// 获取文章评论
+        /// </summary>
+        /// <param name="id">文章id</param>
+        /// <returns></returns>
         public JsonResult GetCommentList(string id)
         {
             var list = new CommentBll().GetList(id);
             if (list.Count == 0)
             {
-                var jsonEmpty = new { total = 0, list = new string[] {}};
+                var jsonEmpty = new {total = 0, list = new string[] {}};
                 return Json(jsonEmpty, JsonRequestBehavior.AllowGet);
             }
-            
+
             foreach (var item in list)
             {
                 if (IsNumAndEnCh(item.username)) continue;
@@ -111,7 +157,12 @@ namespace WebSite.Controllers
                 total = list.Count
             };
             return Json(json, JsonRequestBehavior.AllowGet);
-    }
+        }
+        /// <summary>
+        /// 获取文章详情视图
+        /// </summary>
+        /// <param name="id">文章id</param>
+        /// <returns></returns>
         public ActionResult Detail(string id)
         {
             var articleModel = new ArticleBll().Detail(id);
@@ -121,12 +172,35 @@ namespace WebSite.Controllers
             ViewData["jssdk"] = ht;
             return View(articleModel);
         }
+        /// <summary>
+        /// 获取相关资讯
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetRelatedList(string id)
+        {
+            var list = new ArticleBll().Related(id);
+            var json = new
+            {
+                list
+            };
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 获取用户文章详情视图
+        /// </summary>
+        /// <param name="id">用户文章id</param>
+        /// <returns></returns>
         public ActionResult UserArticleDetail(string id)
         {
             var articleModel = new UserArticleBll().Detail(id);
             ViewData["Id"] = id;
             return View(articleModel);
         }
+        /// <summary>
+        /// 添加评论
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult Add(CommentModel model)
         {
@@ -137,6 +211,11 @@ namespace WebSite.Controllers
             var flag = new CommentBll().Add(model);
             return Json(flag ? JsonHandler.CreateMessage(1, "评论成功") : JsonHandler.CreateMessage(0, "评论失败"), JsonRequestBehavior.DenyGet);
         }
+        /// <summary>
+        /// 添加用户文章
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
         public JsonResult AddArticle(UserArticleModel model)

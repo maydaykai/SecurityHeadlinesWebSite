@@ -31,7 +31,7 @@
                                     <span>来源：</span>@Model.source
                                                            }</span><br />
                                 <span class="lbtn comment"></span>
-                                <span class="lbtn time" data-publishtime="1458871218">@{string pubTime = Model.pubTime.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
+                                <span class="lbtn time">@{string pubTime = Model.pubTime.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
                             </div>
                         </div>
                     </div>
@@ -47,6 +47,13 @@
                                     window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {}, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["weixin", "qzone", "tsina"] } };
                                     with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
                                 </script>
+                            </li>
+                        </ul>
+                        <ul class="blog-post-tags">
+                            <li class="uppercase">
+                                <div class="bdsharebuttonbox">
+                                    <a>我是延伸阅读</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -132,6 +139,9 @@
             this.getURL = function() {
                 return options.api;
             };
+            this.getRelateURL = function () {
+                return options.relate;
+            };
             this.renderList = function() {
                 var _this = this;
                 $.getJSON(this.URL).then(function(data) {
@@ -147,6 +157,14 @@
                 }, function() {
                     console.log('Error...');
                 }).always(function() {
+                });
+            };
+            this.getRelateList = function() {
+                $.getJSON(this.RelateUrl).then(function (data) {
+                    
+                }, function () {
+                    console.log('Error...');
+                }).always(function () {
                 });
             };
             $main.on("click", "#btn_save", function() {
@@ -171,17 +189,22 @@
             });
             this.init = function () {
                 this.URL = this.getURL();
+                this.RelateUrl = this.getRelateURL();
                 this.renderList();
+                this.getRelateList();
             };
         };
 
         $(function () {
             var app = new eventsList(null, {
-                api: '@Url.Action("GetCommentList", "Article")/@id'
+                api: '@Url.Action("GetCommentList", "Article")/@id',
+                relate: '@Url.Action("GetRelatedList", "Article")/@id'
             });
             app.init();
         });
     })(window.jQuery);
+
+    //分享begin
     var shareTitle = '@Model.title';
     var shareLink = 'http://www.aftop.cn/Article/Detail/@Model.id';
     var shareImg = function() {
@@ -204,7 +227,7 @@
         signature: '@jssdk["signature"].ToString()',// 必填，签名，见附录1
         jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage","onMenuShareQQ","onMenuShareWeibo","onMenuShareQZone"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
-    
+
     wx.ready(function () {
         wx.onMenuShareTimeline({
             title: shareTitle, // 分享标题
@@ -268,4 +291,5 @@
             }
         });
     });
+    //分享end
 </script>
