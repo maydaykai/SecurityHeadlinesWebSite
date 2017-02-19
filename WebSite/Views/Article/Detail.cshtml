@@ -41,21 +41,21 @@
                     <div class="blog-single-foot">
                         <ul class="blog-post-tags">
                             <li class="uppercase">
-                                <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                <div class="bdsharebuttonbox">
+                                    <a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
                                 </div>
                                 <script>
                                     window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {}, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["weixin", "qzone", "tsina"] } };
-                                    with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+                                    with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
                                 </script>
                             </li>
                         </ul>
-                        <ul class="blog-post-tags">
-                            <li class="uppercase">
-                                <div class="bdsharebuttonbox">
-                                    <a>我是延伸阅读</a>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="portlet">
+                            <span>推荐阅读：</span>
+                            <div class="portlet-body" id="pagelet-nfeedlist">
+
+                            </div>
+                        </div>
                     </div>
                     <div class="blog-comments" id="wrapper" style="width: 100%;">
                         <h3 class="sbold blog-comments-title">评论 (<span id="total">0</span>)</h3>
@@ -67,7 +67,7 @@
                                 <button type="button" id="btn_save" class="btn blue uppercase btn-md sbold btn-block">发布评论</button>
                             </div>
                         </div>
-                        <div class="c-comment-list" id="pagelet-nfeedlist">
+                        <div class="c-comment-list" id="commentList">
                         </div>
                     </div>
                 </div>
@@ -96,6 +96,41 @@
     </div>
     {{/each}}
 </script>
+<script type="text/x-handlebars-template" id="relate-list-item">
+    {{#each this}}
+    <div class="item-inner">
+        {{#imgLengthHelper imgs}}
+        <div class="rbox" style="margin-left:0px;">
+            {{else}}
+            <div class="lbox left">
+                <a ga_event="click_feed_newsimg" href="/Article/Detail/{{id}}" target="_blank">
+                    <img class="feedimg" src="{{imgHelper imgs}}" onload="this.style.opacity = 1;" style="opacity: 1;">
+                </a>
+            </div>
+            <div class="rbox">
+                {{/imgLengthHelper}}
+                <div class="rbox-inner">
+                    <div class="title-box">
+                        <a ga_event="click_feed_newstitle" class="link title" href="/Article/Detail/{{id}}" target="_blank" data-node="title">
+                            {{title}}
+                        </a>
+                    </div>
+                    <div class="abstract">
+                        <a ga_event="click_feed_newsabstract" class="link" href="/Article/Detail/{{id}}">{{content}}</a>
+                    </div>
+                    <div class="footer">
+                        <div class="left lfooter">
+                            <span class="lbtn comment">{{source}}&nbsp;⋅</span>
+                            <span class="lbtn comment">{{commentCount}}评论&nbsp;⋅</span>
+                            <span class="lbtn time">{{dateHelper pubTime}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
 @{
     var id = ViewData["Id"];
     var jssdk = ViewData["jssdk"] as System.Collections.Hashtable;
@@ -105,10 +140,23 @@
     (function($) {
         var eventsList = function(element, options) {
             var $main = $('#wrapper');
-            var $list = $main.find('#pagelet-nfeedlist');
+            var $list = $main.find('#commentList');
             var $total = $main.find('#total');
 
             this.compiler = Handlebars.compile($('#tpi-list-item').html());
+            Handlebars.registerHelper("imgHelper", function (value, num) {
+                if (!value)
+                    return "";
+                var imgs = value.split(',');
+                if (!(num === +num)) num = 0;
+                return imgs[num];
+            });
+            Handlebars.registerHelper("imgLengthHelper", function (value, options) {
+                if (!value)
+                    return options.inverse(this);
+                var imgs = value.split(',');
+                return imgs.length > 2 ? options.fn(this) : options.inverse(this);
+            });
             Handlebars.registerHelper("dateHelper", function (value) {
                 var date = new Date(parseInt(value.replace("/Date(", "").replace(")/", "")));
                 Date.prototype.format = function (format) {
@@ -159,9 +207,13 @@
                 }).always(function() {
                 });
             };
-            this.getRelateList = function() {
+            this.getRelateList = function () {
+                var _this = this;
                 $.getJSON(this.RelateUrl).then(function (data) {
-                    
+                    _this.compiler = Handlebars.compile($('#relate-list-item').html());
+                    var html = _this.compiler(data.list);
+                    var $list = $('#pagelet-nfeedlist');
+                    $list.append(html);
                 }, function () {
                     console.log('Error...');
                 }).always(function () {

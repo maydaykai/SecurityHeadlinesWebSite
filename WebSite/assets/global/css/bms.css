@@ -3,6 +3,11 @@
 #pagelet-nfeedlist .item-inner{position: relative;padding: 16px 0;border-bottom: 1px solid #f5f6f7;}
 #pagelet-nfeedlist .title-box{display:block;font-size:18px;color:#000042;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.15;margin-bottom:4px;font-weight:700}
 
+#pagelet-nfeedlist2 .left{float: left;}
+#pagelet-nfeedlist2 .right{float: right;}
+#pagelet-nfeedlist2 .item-inner{position: relative;padding: 16px 0;border-bottom: 1px solid #f5f6f7;}
+#pagelet-nfeedlist2 .title-box{display:block;font-size:18px;color:#000042;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.15;margin-bottom:4px;font-weight:700}
+
 #pagelet-nfeedlist .title-box a{text-decoration:none;color:#222}
 #pagelet-nfeedlist .title-box a:hover{color: #5C9BD1 }
 #pagelet-nfeedlist .link{text-decoration:none;color:#555}
