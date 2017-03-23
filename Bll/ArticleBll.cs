@@ -72,7 +72,7 @@ namespace Bll
         {
             var list = new List<ArticleModel>();
             var totalRows = 0;
-            var queryStr = "ChannelID = (SELECT ChannelID FROM dbo.Article WHERE OID='" + id + "') AND OID <> '" + id + "'";
+            var queryStr = "Status = 3 AND ChannelID = (SELECT ChannelID FROM dbo.Article WHERE OID='" + id + "') AND OID <> '" + id + "'";
             var dt = GetList(queryStr, "pubTime desc", 1, 4, ref totalRows);
             if (dt != null)
             {
