@@ -85,13 +85,15 @@ namespace WebSite.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
-        /// 获取列表页面上面大图
+        /// 根据类型获取
+        /// 0:获取列表页面上面大图
+        /// 4:文章详细页面广告
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetBannerList()
+        public JsonResult GetBannerList(int type)
         {
             var totalRows = 0;
-            var list = new BannerBll().GetBannerModelList("Status=1 AND Type=0", "UpdateTime DESC", 1, 100, ref totalRows);
+            var list = new BannerBll().GetBannerModelList("Status=1 AND Type=" + type, "UpdateTime DESC", 1, 100, ref totalRows);
             var json = new
             {
                 list

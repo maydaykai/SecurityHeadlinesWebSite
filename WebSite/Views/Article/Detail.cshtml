@@ -1,7 +1,9 @@
 ﻿@model Model.ArticleModel
 
 @{
-    ViewBag.Title = "title";
+    var content = Common.HtmlHelper.DeleteHtml(Model.content);
+    ViewBag.Title = Model.title;
+    ViewBag.Description = content.Length > 100 ? content.Substring(0,100) : content;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -27,13 +29,16 @@
                         <div class="blog-single-head-date">
                             <div class="left lfooter mb20">
                                 <span class="lbtn comment">@if (!string.IsNullOrEmpty(Model.source))
-                                {
-                                    <span>来源：</span>@Model.source
-                                                           }</span><br />
+                                                           {
+                                                               <span>来源：</span>@Model.source
+                                                           }</span><br/>
                                 <span class="lbtn comment"></span>
                                 <span class="lbtn time">@{string pubTime = Model.pubTime.ToLocalTime().ToString();}@Html.DisplayFor(modelItem => pubTime)</span>
                             </div>
                         </div>
+                    </div>
+                    <div class="portlet-body" id="advert">
+                        
                     </div>
                     <div id="content" class="blog-single-desc">
                         @Html.Raw(Model.content)
@@ -50,10 +55,9 @@
                                 </script>
                             </li>
                         </ul>
-                        <div class="portlet">
+                        <div>
                             <span>推荐阅读：</span>
                             <div class="portlet-body" id="pagelet-nfeedlist">
-
                             </div>
                         </div>
                     </div>
@@ -246,13 +250,35 @@
                 this.getRelateList();
             };
         };
+        var Advert = function () {
+            this.getURL = function () {
+                return '@Url.Action("GetBannerList", "Article")?type=4';
+            };
+            this.renderList = function (start, type) {
+                var urlPre = "http://www.aftop.cn:8088/img/";
+                $.getJSON(this.URL).then(function (data) {
+                    if (data.list.length == 0)return;
+                    var html = '<a href="' + data.list[0].Url + '" target="_blank"><img src="' + urlPre + data.list[0].LargePicture + '" style="width:100%;"></a>';
+                    $("#advert").html(html);
+                }, function () {
+                    console.log('Error...');
+                }).always(function () {
+                });
+            };
 
+            this.init = function () {
+                this.URL = this.getURL();
+                this.renderList();
+            };
+        };
         $(function () {
             var app = new eventsList(null, {
                 api: '@Url.Action("GetCommentList", "Article")/@id',
                 relate: '@Url.Action("GetRelatedList", "Article")/@id'
             });
             app.init();
+            var advert = new Advert();
+            advert.init();
         });
     })(window.jQuery);
 

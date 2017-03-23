@@ -1,7 +1,8 @@
 ﻿@model System.Collections.Generic.List<Model.ArticleModel>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "安防头条";
+    ViewBag.Description = "迪威乐云商，以交易为核心，专注安防O2O服务，打造安防产业生态链O2O平台。";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -310,7 +311,7 @@
 
             this.compiler = Handlebars.compile($('#banner-list').html());
             this.getURL = function () {
-                return '@Url.Action("GetBannerList", "Article")';
+                return '@Url.Action("GetBannerList", "Article")?type=0';
             };
             this.renderList = function (start, type) {
                 var _this = this;
