@@ -245,12 +245,16 @@
     <Content Include="assets\global\css\plugins.css" />
     <Content Include="assets\global\css\plugins.min.css" />
     <Content Include="assets\global\css\swiper.min.css" />
+    <Content Include="assets\global\img\12.png" />
     <Content Include="assets\global\img\3c600091bbcc0c282fa.jpg" />
     <Content Include="assets\global\img\90e45236-d62a-4c14-93c2-eae72fdadf20.jpg" />
     <Content Include="assets\global\img\accordion-plusminus.png" />
     <Content Include="assets\global\img\ajax-loading.gif" />
     <Content Include="assets\global\img\ajax-modal-loading.gif" />
+    <Content Include="assets\global\img\chacha3.png" />
     <Content Include="assets\global\img\datatable-row-openclose.png" />
+    <Content Include="assets\global\img\index_tab_l.png" />
+    <Content Include="assets\global\img\index_tab_r.png" />
     <Content Include="assets\global\img\input-spinner.gif" />
     <Content Include="assets\global\img\loading-spinner-blue.gif" />
     <Content Include="assets\global\img\loading-spinner-default.gif" />
@@ -271,6 +275,9 @@
     <Content Include="assets\global\img\remove-icon-small.png" />
     <Content Include="assets\global\img\syncfusion-icons-white.png" />
     <Content Include="assets\global\img\syncfusion-icons.png" />
+    <Content Include="assets\global\img\wefw.png" />
+    <Content Include="assets\global\img\search.png" />
+    <Content Include="assets\global\img\magnifier.png" />
     <Content Include="assets\global\plugins\amcharts\amcharts\amcharts.js" />
     <Content Include="assets\global\plugins\amcharts\amcharts\funnel.js" />
     <Content Include="assets\global\plugins\amcharts\amcharts\gantt.js" />
@@ -3986,6 +3993,7 @@
     <Content Include="assets\global\scripts\app.min.js" />
     <Content Include="assets\global\scripts\datatable.js" />
     <Content Include="assets\global\scripts\datatable.min.js" />
+    <Content Include="assets\global\scripts\pic_tab.js" />
     <Content Include="assets\layouts\global\scripts\quick-sidebar.js" />
     <Content Include="assets\layouts\global\scripts\quick-sidebar.min.js" />
     <Content Include="assets\layouts\layout3\css\custom.css" />
@@ -4842,6 +4850,7 @@
     <Content Include="Views\Article\Add.cshtml" />
     <Content Include="Views\Article\UserArticleList.cshtml" />
     <Content Include="Views\Article\UserArticleDetail.cshtml" />
+    <Content Include="Views\Shared\_NewLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
